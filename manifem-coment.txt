@@ -1,0 +1,246 @@
+
+deveriamos prever a possibilidade de "desactivar" um campo NumericField
+Por exemplo, criamos uma malha com as coordenadas xyz, depois criamos o
+elemento master com as coordenadas xi eta, depois queremos remalhar.
+Convem desactivar as coordenadas xi eta quando remalhamos.
+
+No produto cartesiano de malhas, usar um iterador "coerente" e
+eliminar celulas que sabemos que ja nao serao usadas.
+
+Chamo "iterador coerente" a um iterador que usa uma interface (um corte) que "baleia"
+a malha toda. Usa apenas relacoes de vizinhanca (nao usa listas de celulas) mas precisa
+duma celula para iniciar o processo. Tem a vantagem que pode fornecer informacao suplementar.
+Para alem da celula corrente, pode indicar uma zona de celulas que ja' foram fornecidas
+e nao voltarao a aparecer no processo de iteracao.
+Por exemplo, suponhamos que iteramos sobre segmentos numa malha 3D.
+Havera' uma superficie que corta a malha em duas zonas, uma branca que ja' foi percorrida
+e uma preta que ainda nao foi. Escolhemos uma face qualquer nesta superficie (usamos outro
+iterador?) e consideramos a celula preta adjacente a esta face. Iremos devolver segmentos
+na fronteira desta celula, que agora consideramos cinzenta. A interface corta a fronteira
+da celula cinzenta em duas zonas, uma que passamos a considerar cinzenta (do lado branco
+da malha), outra ainda preta; devolveremos segmentos da zona cinzenta.
+Usamos um outro iterador sobre a fronteira cinzenta (que podemos inicializar com o corte
+com a interface na malha grande - um loop que podemos colorir de cor-de-rosa).
+Quando acabamos com a zona cinzenta, podemos dar informacao ao utilizador do iterador
+que esses segmentos nao voltarao a aparecer.
+Mais precisamente : se um segmento da zona cinzenta nao toca no loop cor-de-rosa, entao
+toda a sua vizinhanca imediata nao voltara' a aparecer no processo de iteracao.
+Nalguns algoritmos, isto pode ser util para o utilizador do iterador.
+Por exemplo, no produto cartesiano de malhas. Ai', queremos, na verdade, um iterador que
+forneca todas as celulas independentemente da dimensao. Se soubermos que uma certa zona
+nao voltara' a aparecer no processo de iteracao, podemos limpar alguns dicionarios (maps).
+Se formos por ai', nem precisamos das listas de celulas [gulp]
+
+quando fazemos reset dum iterador sobre malha uni-dimensional, podemos testar se a linha
+e' fechada ou aberta
+se necessario, metamorfosamos o iterador
+
+em interpolate, por os coeficientes antes dos pontos
+
+Fields parecem funcionar
+tenho que prever maneira de localizar os indices : para cada malha um conjunto de indices
+
+guardo em  2019.10  : samsung com borboletas e disco azul
+
+functions, manifolds, tudo incipiente mas funcionam
+
+guardo em 2019.10.25
+
+rever os metodos first_vertex, last_vertex, first_segment, last_segment
+acrescentar tag::may_not_exist e tag::surely_exists, fica parecido com cell_in_front_of
+
+introduzir iteradores declarados com tag::cells_of_max_dim,
+que usem cells->back()
+a mesma coisa para number_of
+
+quando calculamos as componentes duma funcao associada a um campo vectorial,
+nao precisamos de criar as componentes do campo vectorial
+podemos ter uma funcao escalar associada a um indice dentro dum campo vectorial
+
+em draw_ps_3d, introduzir uns cinzentos para dar a impressao de nevoeiro
+mas entao teriamos que ordenar os segmentos
+
+eliminar o construtor Manifold circle_manif ( tag::parametric, tag::of_dim, 1 )
+
+em simplif, acrescentar construtores para Sum e Prod com tag::reserve_size
+
+em progressive, evitar o uso da raiz quadrada (testar para ver se melhora)
+por exemplo, para um certo vertice A, procuramos outros vertices a distancia menor que d de A
+procuramos um oficial O de rank r[k], calculamos o quadrado da distancia AO
+se AO for maior que r[k]+d, sabemos que nao vale a pena procurar entre os subalternos de O
+precisamos, portanto, duma estimativa AO >= ?
+primeiro, se AO^2 <= d[k]^2 entao o proprio A poderia ser um subalterno de O portanto
+temos que procurar sim entre os subalternos de O
+segundo, se AO^2 > r[k+1]^2 entao A nao poderia ser subalterno do superior imediato de O
+portanto e' impossivel haver um subalterno de O tao perto de A
+resta o caso d[k]^2 <= AO^2 <= r[k+1]^2
+escrevemos AO^2 como combinacao convexa AO^2 = alpha d[k]^2 + beta r[k+1]^2
+resulta AO > alpha d[k] + beta r[k+1]  (com sorte, podemos ja' responder negativamente)
+depois ainda podemos aplicar um ou dois passos do algoritmo de Newton
+x = (x^2+AO^2)/(2x)  a partir de  x = alpha d[k] + beta r[k+1]
+todos os valores deste algoritmo estao acima da raiz quadrada, portanto AO <= x
+a partir de  alpha d[k] + beta r[k+1] <= AO <= x  aplicamos novamente a combinacao convexa
+
+em progressive, quando construimos as normais, guardar tambem o vector segmento
+uniformizar o uso de positive_orientation, cos_sq_120 e cos_sq_60
+pensar bem os produtos internos, pois as normais sao ortogonais na metrica de Riemman
+em switch_orientation ( Mesh ), nao usar reverse, mas chamar switch_orientation ( Cell )
+
+em correctly_oriented, procurar um so' vertice com zmax
+e determinar a orientacao dos triangulos adjacentes como se fossem horizontais
+
+belongs_to nao funciona para malhas negativas ?
+criar versoes de belongs_to que tomem a dimensao da celula como argumento
+acrescentar verificacao belongs_to no metodo reset dos iteradores sobre malhas uni-dimensionais
+
+a sequencia de instrucoes
+	Mesh msh ( tag::of_dimension_one );
+	AB.add_to ( msh );  BC.add_to ( msh );
+	BC.reverse().remove_from ( msh );
+deveria desencadear um erro num assert mais cedo, antes de action_remove
+
+para malhas adaptativas
+temos uma distancia de longo alcance dada pelo espaco ambiente euclidiano
+e uma distancia de curto alcance dada pelo produto interno no espaco tangente
+da variedade
+esta ultima e' dada por uma matriz
+precisamos duma margem inferior do coeficiente de Rayleigh  Axx > margem x^2
+o Cloud vai trabalhar apenas com distancia de longo alcance
+quando pedimos vertices proximos dum vertice dado,
+fornecemos uma distancia calculada com a margem acima referida
+Cloud devolve uma lista possivelmente demasiado larga,
+depois nos filtramos com a distancia de curto alcance
+
+Mesh::Mesh ( const tag::Progressive &, const tag::StartAt &, const Cell & start,
+             const tag::DesiredLength &, double desired_length                   )
+deveria ter tag::random_orientation ?  uniformizar
+
+em manifold.h, ficou steps_for_Newton = 10
+testar com os dois toros se faz diferenca diminuir este valor
+
+disponibilizar separadamente 'simplif' assim como fizemos com 'metric tree' ?
+
+em progressive_construct, poderiamos fornecer (sub)variedades como fronteiras
+(em vez de malhas)
+especificar uma direccao (com tag::towards) atraves duma desigualdade entre duas funcoes
+
+o copy-constructor de Manifold nao deveria setar Manifold::working
+ou talvez o move operator e move constructor ?
+
+introduzir shared_ptr em Function e Manifold e Field
+agora tenho release em Function mas shared_ptr e' melhor
+vou ter que usar dynamic_pointer_cast ou static_pointer_cast, ver simplif.cpp
+ou entao usar inheritance from tag::Util::Core e tag::Util::Wrapper
+em Cell nao vale a pena porque tenho a informacao por outras vias
+
+rever em pormenor progressive.cpp lines 1787-1834
+
+neste momento, instrucoes como
+Function xi_eta_phys ( xi_eta, tag::composed_with, transf )
+nao funcionam bem; xi_eta_phys fica a herdar de Function::Scalar
+
+refazer completamente as malhas
+malhas caoticas mante^em a lista de ce'lulas como ate' agora
+malhas ordenadas te^em iteradores diferentes, ordenados
+as operacoes de acrescentar ou retirar uma ce'lula serao diferenciados
+introduzir um tag::do_not_worry para acrescentar ou retirar uma ce'lula
+a uma malha ordenada mas como se fosse caotica
+parcialment feito :
+sete tipos de malhas (catorze se contarmos com as negativas)
+* 0D (fronteiras de segmentos)
+* 1D connected
+* 1D multiply connected
+* connected, dim >= 2
+* multiply connected, dim >= 2
+* fuzzy, dim >= 1
+* STSI : self-touching or self-intersecting, dim >= 1
+
+as malhas multiply connected ficam para mais tarde
+
+talvez umas malhas "softly joined" ?  on-the-fly como as negativas
+
+o campo 'cell_behind_within' precisa dum tratamento `a parte
+tal como glue_on_bdry_of e cut_from_bdry_of
+talvez proibir que a fronteira duma celula seja STSI
+
+tenho que ver Mesh::Core::add_***, Mesh::Core::remove_*** e deep_connections
+add_*** e remove_*** tratam de Cell::Core::cell_behind_within
+deep_connections trata de Cell::Positive::meshes e de Mesh::Fuzzy::cells
+quem trata de Cell::Positive::***::meshes_same_dim ?  Mesh::add_link_sd
+tratar de glue_on_bdry e cut_from_bdry
+
+um dia hei-de experimentar eliminar completamente Cell::Positive::meshes[0]
+(ja' que e' sempre vazia)
+
+introduzir um iterador especial que devolva os contadores cp e cn ?
+
+procurar umas mensagens de erro mais explicitas em Mesh::assert_cast
+que digam o sitio onde assert_cast foi invocado
+
+em Manifold::Parametric temos std::map < Function::Core *, Function::Core * > equations
+nao esta' bem
+
+uma celula deve ser mantida viva se
+  - tiver um wrapper Cell
+	- pertencer a uma malha
+	  este ultimo criterio e' decidido com base no campo Mesh::***::cells ou 
+    Cell::***::cell_behind_within.second ou Mesh::Connected::first
+uma malha deve ser mantida viva se
+  - tiver um wrapper Mesh
+	- for a fronteira duma celula
+portanto os campos Cell::***::meshes_same_dim, Cell::***::meshes nao contam ...
+  Mesh::***::cell_enclosed tambem nao ...
+
+implementar
+inline Cell::PositiveSegment::PositiveSegment ( Cell A, Cell B, const tag::OneDummyWrapper &,
+const tag::TipHasOneDW & )
+para usar em Mesh::Connected::OneDim::OneDim
+porque prev_point vai ter um wrapper normal
+mas P nao vai ter wrapper, apesar de ter contador == 1
+pois P tera' sido criado com
+Cell::Positive::Vertex * P = new Cell::Positive::Vertex ( tag::one_dummy_wrapper )
+
+temos destrutores de celulas e malhas ?  yes, default
+
+verificar com calma quantos objectos temporarios sao criados e tentar reduzir
+talvez criar iteradores que devolvam Cell::Core
+Core iterators should return Core cells ?
+
+verificar o garbage collector de celulas e malhas
+
+definir um construtor Mesh::Connected::OneDim com argumentos first_ver, last_ver
+em add_to_my_cells, incrementar nb_of_segs
+eliminar update_info_connected_one_dim de progressive.cpp
+
+em progressive.cpp, agora podemos usar, para interface, uma malha Fuzzy
+em vez duma lista de malhas conexas
+mais ainda : no futuro, usaremos uma malha STSI e o self-touch ficara' mais simples
+
+juncao : abandonamos o ramo fuzzy-STSI, passamos tudo para master
+
+nos exemplos abaixo,  o contador de celulas nao chega a zero
+3.3 : 8   3.15 : 4  3.17 : 4  3.18 : 4  3.19 : 4  3.22 : 4  3.24 : 8  6.2 : 4  6.3 : 7
+nalguns casos, tem a ver com os elementos finitos que nao ficam destruidos
+noutros casos tem a ver com o cloud
+
+nos iteradores sobre chains (incluindo os centered)
+escolher, no construtor, entre closed loop e open chain
+
+introduzir metodos CellIterator::is_closed_loop e CellIterator::is_open_chain
+
+vertices normal order parece bom, testei
+a seguir : vertices reverse order, testei
+talvez acrescentar um quadrado negativo `a malha
+depois segments
+introduzir o tag::inner
+
+
+no disco azul :   copiar  master
+                  apagar  current
+
+
+github master
+  copiar :  iterator.{h,cpp}
+
+github attic
+  copiar :  coment.txt
