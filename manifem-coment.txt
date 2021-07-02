@@ -235,12 +235,3 @@ depois segments
 introduzir o tag::inner
 
 
-no disco azul :   copiar  master
-                  apagar  current
-
-
-github master
-  copiar :  iterator.{h,cpp}
-
-github attic
-  copiar :  coment.txt
