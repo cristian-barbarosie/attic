@@ -39,6 +39,8 @@ alias ec-kill="emacsclient -e '(kill-emacs)'"
 *.pdf
 
 
+debian ps aux : package procps
+
 find . -name "*.theta"
 xclock -d -update 10 -strftime '%Y.%m.%d %H:%M'
 mkisofs -graft-points -f -r -R -l -J modulef-doc/=/home/barbaros/modulef/FR/ | cdrecord -v -pad speed=4 dev=0,0,0 -multi -waiti -
