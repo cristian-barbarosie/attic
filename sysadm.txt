@@ -1,0 +1,392 @@
+
+
+para emacs em multiplas consolas :
+export ALTERNATE_EDITOR=""
+export EDITOR=emacsclient
+alias ec='emacsclient -c'
+alias ec-kill="emacsclient -e '(kill-emacs)'"
+
+
+.emacs
+;; Always end a file with a newline 
+(setq require-final-newline t)
+(setq-default tab-width 2)
+;; No backups, no auto-save 
+(setq make-backup-files nil) 
+(setq auto-save-default nil) 
+(global-set-key "\C-s" 'nonincremental-search-forward) 
+(global-set-key [f3] 'nonincremental-repeat-search-forward) 
+(global-set-key [M-down] 'scroll-down-line) 
+(global-set-key [M-up] 'scroll-up-line) 
+(setq electric-indent nil)
+;; specific for alcatel keyboard on android
+(global-set-key "\C-o" 'scroll-down-line)
+(global-set-key "\C-p" 'scroll-up-line)
+(global-set-key "\C-\\" 'kill-ring-save)
+(global-set-key "\C-l" 'yank-pop)
+
+
+find . -name "*.theta"
+xclock -d -update 10 -strftime '%Y.%m.%d %H:%M'
+mkisofs -graft-points -f -r -R -l -J modulef-doc/=/home/barbaros/modulef/FR/ | cdrecord -v -pad speed=4 dev=0,0,0 -multi -waiti -
+mount -o loop=/dev/loop3,ro image.iso director/
+cstdlib
+opcoes a2ps: -o ficheiro.ps 
+  --left-footer='' --right-footer='' --footer='' -L61    (o numero de linhas)
+  --header='' -M A4dj --portrait --columns=1
+opcoes dvipdfm: -p a4
+para g55: /llx 34 def /lly 34 def
+ps2pdf -sPAPERSIZE=a4 file.ps
+PostScript :
+xcenter ycenter radius angle1 angle2 arc
+/Times-Roman findfont 50 scalefont setfont
+407 500 moveto gsave -90 rotate (ENCONTRO) show grestore
+n {...} repeat
+start increment stop {...} for  % nameless variable on the stack 
+  % at the beginning of each loop
+  % /i exch def   gives the name i to this variable
+gs -q -dNOPAUSE -dBATCH -dDOINTERPOLATE -dUSEFLATCOMPRESSION=TRUE -sDEVICE=pdfwrite -r300 -sOUTPUTFILE=xyz.pdf -f *.eps
+gs -sDEVICE=psgray -sOutputFile=file_gray.ps -q -dNOPAUSE -dBATCH file.ps
+gs -sDEVICE=psmono -sOutputFile=file_bw.ps -q -dNOPAUSE -dBATCH file.ps
+gs -dEPSFitPage file.eps
+dvips -t landscape -o file.ps file[.dvi]
+a4 210x297mm
+
+for duplex printing:
+1. for printers which eject pages with printed face down (laser):
+   psselect -re file.ps | lpr,  dvips -r -B
+   turn the sheets in the printer
+   psselect -o file.ps | lpr,   dvips -A
+2. for printers which eject pages with printed face up (ink jet):
+   psselect -e file.ps | lpr,   dvips -B
+   if necessary, add one blank sheet
+   check with psselect -p- file.ps > dev.null
+   turn the sheets in the printer
+   psselect -ro file.ps | lpr,  dvips -r -A
+   or:
+   psselect -ro file.ps | lpr,  dvips -r -A
+   turn the sheets in the printer
+   psselect -e file.ps | lpr,   dvips -B
+   check if the last page was left in the tray
+
+para um dispositivo de internet movel (hub) : http://192.168.01
+nivel da bateria : cat /sys/class/power_supply/BAT0/capacity
+desligar temporariamente o ecrã em X :
+  xbacklight -set 0; line; xbacklight -set 30
+desligar o disco rígido (pô-lo a dormir) : hdparm -Y /dev/sda
+abrir uma nova consola (sem novo login) : openvt [-s] bash -l
+bluetooth em linux :
+sudo apt install bluez python-gobject python-dbus
+hciconfig -a
+sudo hciconfig hci0 up
+hcitool dev
+hcitool scan
+https://wiki.archilinux.org/index.php/bluetooth_keyboard
+bastou fazer uma vez pair e trust
+Para o AsusDocking, tenho que fazer o connect de cada vez :
+#!/bin/sh
+echo "connect 1C:B7:2C:1E:FD:FA" | bluetoothctl
+O teclado flexível vermelho Dali conecta-se sozinho.
+
+rede wireless :
+--------------------------------------------------------------
+rede=wlp5s0
+#rede=wlp1s0
+iw dev $rede set type ibss
+wpa_supplicant -B -i $rede -c <(wpa_passphrase VodafoneMobileWiFi-E4AB24 8747556334 )
+dhcpcd $rede
+--------------------------------------------------------------
+wpa_supplicant -B -i $rede -c <(wpa_passphrase AndroidAP naux4079)
+--------------------------------------------------------------
+# rede ad-hoc entre dois ou mais computadores
+rede=wlp5s0
+# ip link shows all devices
+numero=2
+ip link set $rede up
+ip addr add 192.168.1.$numero/24 broadcast 192.168.1.255 dev $rede
+ip route add default via 192.168.1.1
+iw $rede set type ibss
+iw $rede ibss join rede-cristian 2437
+# to undo :
+#ip addr flush dev $rede
+#ip route flush dev $rede
+#ip link set $rede down
+--------------------------------------------------------------
+# eduroam
+rede=wlp5s0
+#rede=wlp1s0
+id=cabarbarosie@fc.ul.pt
+cf=/root/scripts/wpa-edu.conf
+pa=$(systemd-ask-password 'password for '$id)
+echo 'network={' > $cf
+echo '  ssid="eduroam"' >> $cf
+echo '  key_mgmt=WPA-EAP' >> $cf
+echo '  pairwise=CCMP' >> $cf
+echo '  group=CCMP TKIP' >> $cf
+echo '  eap=PEAP' >> $cf
+#echo '  ca_cert="/root/scripts/ca-certificate-fcul.pem"' >> $cf
+echo '  identity="'$id'"' >> $cf
+unset id
+echo '  phase2="auth=MSCHAPV2"' >> $cf
+echo '  password="'$pa'"' >> $cf
+unset pa
+echo '}' >> $cf
+wpa_supplicant -B -i $rede -c $cf
+#wpa_supplicant -i $rede -c $cf
+rm $cf
+unset cf
+dhcpcd $rede
+unset rede
+--------------------------------------------------------------
+# wpa-eduroam.conf
+network={
+  ssid="eduroam"
+  key_mgmt=WPA-EAP
+  pairwise=CCMP
+  group=CCMP TKIP
+  eap=PEAP
+  ca_cert="/root/scripts/ca-certificate.pem"
+  identity="cabarbarosie@fc.ul.pt"
+#  domain_suffix_match="npslxfct.fct.pt"
+  phase2="auth=MSCHAPV2"
+  password="****"
+}
+--------------------------------------------------------------
+ver também os ficheiros vpnciencias.sh e ca-certificate-fcul.pem
+
+corrigir erros de interpretação das teclas :
+showkey  mostra o código da tecla que é carregada
+dumpkeys mostra a tabela toda das teclas
+loadkeys ficheiro  carrega redefinições e alterações
+loadkeys -C /dev/ttyN ficheiro  (mas tty7 não afecta o X infelizmente)
+keymaps(5)  explica a sintaxe do ficheiro
+dumpkeys  mostra uma lista enorme com todas as definições existentes
+em X:
+xbcomp $DISPLAY ficheiro  põe no ficheiro a tabela dos símbolos das teclas
+xbcomp ficheiro $DISPLAY  carrega uma nova tabela
+setkeycodes mexe directamente com o kernel
+http://www.tldp.org/HOWTO/Keyboard-and-Console-HOWTO-5.html
+http://wiki.linuxquestions.org/wiki/List_of_keysyms
+https://github.com/haata/KeyboardLayouts/tree/master/loadkeys
+
+set up keyboard-configuration, console-stup, console-setup-linux, kbd, xkb-data
+
+echo N > /sys/class/graphics/fbcon/rotate  roda a consola corrente
+echo N > /sys/class/graphics/fbcon/rotate_all  roda todas as consolas
+N=0 normal, N=1 clockwise, N=2 inverted, N=3 counterclockwise
+para rodar já no boot, em /etc/default/grub
+GRUB_CMDLINE_LINUX="fbcon=rotate:1"  (seguido de update-grub)
+setfont /usr/share/consolefonts/Lat15-Terminus24x12.psf.gz
+ou mexer no ficheiro /etc/vconsole.conf (ArchLinux) :
+FONT=lat1-16
+
+ver ficheiros x.dali.kbd, keymap.dali.txt, keymap.emacs.txt
+    teclado-dali.sh, 
+    rotate-console.sh, rotate-x-screen.sh
+
+sudo, sudoers
+user machine = (superuser) commands
+cristian	ALL=(root) NOPASSWD: /usr/bin/loadkeys
+
+para instalar as impressoras remotas da FCUL
+start menu -> run -> \\printserver.fc.ul.pt
+fc\cabarbarosie
+cmaf-01
+Printers and Faxes\Sistema de Impressão FCUL
+botão direito do rato -> connect (yes)
+para o windows esquecer uma rede como eduroam :
+start menu -> run (windows-r) -> netsh wlan delete profile name=eduroam
+
+%%BoundingBox: 0 0 34 13
+<< /PageSize [34 13] >> setpagedevice
+~/eps2png-2.2/script/eps2png -resolution=96 -output=??.png ??.eps
+
+xfig :
+4 0 15 50 -1 26 18 0.0000 4 210 2805 20 585 Cristian Barbarosie\001
+15 tem a ver com a cor (cyan no exemplo acima)
+alterando o campo 20 o texto desloca-se na horizontal
+26 tem a ver com o tipo de letra (font)
+
+instalar o windows xp :
+partição do disco
+instalar o windows standard
+service pack 3 CD
+service pack 4 não sei se valerá a pena ...
+talvez windows update
+baixar o nível de som (do control panel)
+opções de energia
+  esquemas de energia
+    sempre ligado - nunca desligar,
+            desligar o monitor e o disco após 15 min
+  alarmes - bateria muito fraca
+    acção do alarme - desactivar a acção
+  avançadas
+    não pedir palavra-passe quando reiniciar
+    baixar a tampa do computador - não fazer nada
+  permitir hibernação
+criar os utilizadores todos
+propriedades do ecrã -> protecção do ecrã ->
+  -> ao reiniciar, não mostrar ecrã de boas-vindas
+updates : notify but do not download or install
+ (saltar genuine windows notification)
+rede wireless eduroam properties
+  Authentication : tudo desmarcado
+  EAP type : Protected EAP (PEAP)
+  Protected EAP properties
+  Authentication method : Secured Password (EAP MSCHAPv2)
+  EAP MSCHAPv2 Properties : uncheck (não usar Windows logoname)
+hotfix microsoft (https certificate error) WindowsXP-KB968730-x86-PTG.exe
+java
+Mozilla Firefox
+Chrome
+FoxReader dopdf cutewriter
+vlc sshSecurSshell Freestudio ImgBurn anyzip
+http://windowsxp.mvps.org/tweakui.htm (desactivar a roda do rato)
+instalar as impressoras HP sem a impressora ligada
+
+cygwin - instalar numa partição fat32
+  editar /usr/X11R6/bin/startxwin.bat
+    na linha 150, %RUN% xterm -e /usr/bin/bash -l
+    acrescentar a opção -fn 8x13 ou 10x20
+    fica %RUN% rxvt -fn 8x13 -e /usr/bin/bash -l
+    font-isas-misc, font-jis-misc, font-daewoo-misc
+    cygutils-extra shutdown xinit dos2unix
+    tex latex generic-extra formats-extra
+no .bashrc, acrescentar
+  export HOME=/cygdrive/d/barbaros
+  cd
+para alterar o proprietário dos ficheiros (após uma reinstalação) :
+  cd /cygdrive/d/barbaros
+  ls -lan  (para confirmar os números correctos)
+  python sysadm/chown.py
+cygwin 2.5.2-1 (time machine)
+ftp://www.fruitbat.org/pub/cygwin/circa/2016/08/30/104223
+última versão que funciona com windows xp
+setup-x86.exe -X 
+
+Antivirus AVG http://free.grisoft.com/doc/1
+anti-spyware Microsoft Windows Defender
+http://www.microsoft.com/athome/security/spyware/software/default.mspx
+
+http://www.cpuid.com/cpuz.php
+CPU-Z is a freeware that gathers information on some of 
+the main devices of your system
+daemon tools version lite (free)
+
+(eval-expression (recent-keys) t)
+   27 91 49 59 53 66 27 91 49 59 53 66 24 5] c-down c-down
+   27 91 49 59 50 66 27 91 49 59 50 66 24 5] s-down s-down
+65 27 79 67 27 79 65 27 79 66 27 79 66 24 5] down down
+
+(eval-expression 'input-decode-map' t)
+
+(setq eval-expression-print-length nil)
+(setq eval-expression-print-level nil)
+
+.emacs
+-------------------------------------------------------------
+;;(define-key input-decode-map "\e^[2A" [S-Updike])
+;;(global-set-key "\e[1;2B" [S-down])
+(setq shift-select-mode t)
+;; O funcionamento das seguintes quatro/cinco funcoes
+;; baseia-se no ficheiro keymap.emacs.txt (loadkeys keymap.emacs.txt) :
+;;keymaps 0-127
+;;	shift keycode 103 = lstroke # up
+;;	shift keycode 105 = hstroke # left
+;;	shift keycode 106 = Hstroke # right
+;;	shift keycode 108 = Lstroke # down
+(global-set-key (kbd "Ħ") 'shift-right-char)
+(defun shift-it ()
+  (unless (and mark-active
+               (eq (car-safe transient-mark-mode) 'only))
+	  (setq transient-mark-mode
+                (cons 'only
+                   (unless (eq transient-mark-mode 'lambda)
+                         transient-mark-mode)))
+           (push-mark nil nil t)))
+(defun shift-right-char (&optional n)
+  "Move point N characters to the right (to the left if N is negative),
+while selecting text"
+  (interactive "p")
+  (shift-it)
+  (if visual-order-cursor-movement
+      (dotimes (i (if (numberp n) (abs n) 1))
+	(move-point-visually (if (and (numberp n) (< n 0)) -1 1)))
+    (if (eq (current-bidi-paragraph-direction) 'left-to-right)
+	(forward-char n)
+      (backward-char n))))
+(global-set-key (kbd "ħ") 'shift-left-char)
+(defun shift-left-char (&optional n)
+  "Move point N characters to the left (to the right if N is negative),
+while selecting text"
+  (interactive "p")
+  (shift-it)
+  (if visual-order-cursor-movement
+      (dotimes (i (if (numberp n) (abs n) 1))
+	(move-point-visually (if (and (numberp n) (< n 0)) 1 -1)))
+    (if (eq (current-bidi-paragraph-direction) 'left-to-right)
+	(backward-char n)
+      (forward-char n))))
+(global-set-key (kbd "ł") 'shift-previous-line)
+(defun shift-previous-line (&optional arg try-vscroll)
+  "Move cursor vertically up ARG lines, while selecting text."
+  (interactive "p\np")
+  (shift-it)
+  (or arg (setq arg 1))
+  (if (called-interactively-p 'interactive)
+      (condition-case err
+	  (line-move (- arg) nil nil try-vscroll)
+	((beginning-of-buffer end-of-buffer)
+	 (signal (car err) (cdr err))))
+    (line-move (- arg) nil nil try-vscroll))
+  nil)
+(global-set-key (kbd "Ł") 'shift-next-line)
+(defun shift-next-line (&optional arg try-vscroll)
+  "Move cursor vertically down ARG lines, while selecting text."
+  (interactive "p\np")
+  (shift-it)
+  (or arg (setq arg 1))
+  (if (and next-line-add-newlines (= arg 1))
+      (if (save-excursion (end-of-line) (eobp))
+	  ;; When adding a newline, don't expand an abbrev.
+	  (let ((abbrev-mode nil))
+	    (end-of-line)
+	    (insert (if use-hard-newlines hard-newline "\n")))
+	(line-move arg nil nil try-vscroll))
+    (if (called-interactively-p 'interactive)
+	(condition-case err
+	    (line-move arg nil nil try-vscroll)
+	  ((beginning-of-buffer end-of-buffer)
+	   (signal (car err) (cdr err))))
+      (line-move arg nil nil try-vscroll)))
+  nil)
+;; Turn on font-lock mode for Emacs
+(global-font-lock-mode t)
+;; Visual feedback on selections
+(setq-default transient-mark-mode t)
+;; Always end a file with a newline
+(setq require-final-newline t)
+;; Stop at the end of the file, not just add lines
+(setq next-line-add-newlines nil)
+(global-set-key "\C-s" 'nonincremental-search-forward)
+(global-set-key [f3] 'nonincremental-repeat-search-forward)
+(global-set-key [M-down] 'scroll-down-line)
+(global-set-key [M-up] 'scroll-up-line)
+(global-set-key (kbd "Þ") 'scroll-down-line)
+(global-set-key (kbd "þ") 'scroll-up-line)
+(global-set-key (kbd "Ï") 'query-replace)
+(global-set-key (kbd "ë") 'beginning-of-buffer)
+(global-set-key (kbd "Ë") 'end-of-buffer)
+(global-set-key (kbd "ï") 'undo)
+(setq make-backup-files nil)
+(setq auto-save-default nil)
+;;(electric-indent-mode -1)
+;;(setq c-syntactic-indentation nil)
+;;(setq python-syntactic-indentation nil)
+;;(setq standard-indent 2)
+(setq-default tab-width 2)
+(defvaralias 'c-basic-offset 'tab-width)
+(setq c-default-style "linux")
+;;(defvaralias 'python-indent-offset 'tab-width)
+-------------------------------------------------------------
+

@@ -236,27 +236,3 @@ introduzir o tag::inner
 
 
 
-
-boyue likebbook
-
-.emacs
-;; Always end a file with a newline 
-(setq require-final-newline t)
-(setq-default tab-width 2)
-;; No backups, no auto-save 
-(setq make-backup-files nil) 
-(setq auto-save-default nil) 
-(global-set-key "\C-s" 'nonincremental-search-forward) 
-(global-set-key [f3] 'nonincremental-repeat-search-forward) 
-(global-set-key [M-down] 'scroll-down-line) 
-(global-set-key [M-up] 'scroll-up-line) 
-(setq electric-indent nil)
-;; specific for alcatel keyboard on android
-(global-set-key "\C-o" 'scroll-down-line)
-(global-set-key "\C-p" 'scroll-up-line)
-(global-set-key "\C-\\" 'kill-ring-save)
-(global-set-key "\C-l" 'yank-pop)
-
-/etc/apt/sources.list
-deb http://ftp.de.debian.org/debian sid main
-deb http://ftp.de.debian.org/debian experimental main
