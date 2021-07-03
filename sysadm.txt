@@ -29,7 +29,7 @@ alias ec-kill="emacsclient -e '(kill-emacs)'"
 .gitignore
 .#*
 *.o
-*.exe
+manifem-exe-*
 *.eps
 *.msh
 *.aux
