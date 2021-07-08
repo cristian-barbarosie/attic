@@ -1,5 +1,5 @@
 # attic
-stuff not currently used
+stuff not currently used, or just kept here for the future
 
 simplif.cpp - simplify expressions
 
