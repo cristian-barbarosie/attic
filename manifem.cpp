@@ -1,3 +1,110 @@
+
+parallel :
+
+	if ( not interf.cell_in_front_of ( seg1.tip(), tag::may_not_exist) .exists() )
+	{	if ( std::abs ( psi ( seg2.base().reverse() ) ) >
+		     std::abs ( psi ( seg1.tip() ) )              )
+		{	if ( ( not ambient.cell_behind ( seg2, tag::may_not_exist ) .exists() ) or
+			     ( interf.cell_in_front_of ( seg2.tip(), tag::may_not_exist ) .exists() and
+						 ( not interf.cell_behind ( seg2.tip().reverse(), tag::may_not_exist ) .exists() ) ) )
+			{	seg2.remove_from_mesh ( interf );
+				square.boundary().cell_behind(seg2.tip()).add_to_mesh ( interf );
+				return true;                                                      } }
+		// else  -- abs(psi) the other way around
+		{	if ( ( not ambient.cell_in_front_of ( seg1, tag::may_not_exist ) .exists() ) or
+			     ( interf.cell_behind ( seg1.base().reverse(), tag::may_not_exist ) .exists() and
+						 ( not interf.cell_in_front_of ( seg1.tip(), tag::may_not_exist ) .exists() )   ) )
+			{	seg1.remove_from_mesh ( interf );
+				square.boundary().cell_behind ( seg1.base().reverse() ) .reverse()
+					.add_to_mesh ( interf );
+				return true;                                              }                 }       }
+	
+	if ( not interf.cell_behind ( seg1.base().reverse(), tag::may_not_exist) .exists() )
+	{	if ( std::abs ( psi ( seg1.base().reverse() ) ) <
+		     std::abs ( psi ( seg2.tip() ) )              )
+		{	if ( ( not ambient.cell_behind ( seg2, tag::may_not_exist ) .exists() ) or
+			     ( not interf.cell_in_front_of ( seg2.tip(), tag::may_not_exist ) .exists() and
+						 ( interf.cell_behind ( seg2.tip().reverse(), tag::may_not_exist ) .exists() ) ) )
+			{	seg2.remove_from_mesh ( interf );
+				square.boundary().cell_in_front_of(seg2.base().reverse())
+					.add_to_mesh ( interf );
+				return true;                                                   }                     }
+		// else  -- abs(psi) the other way around
+		{	if ( ( not ambient.cell_in_front_of ( seg1, tag::may_not_exist ) .exists() ) or
+			     ( not interf.cell_behind ( seg1.base().reverse(), tag::may_not_exist ) .exists() and
+						 ( interf.cell_in_front_of ( seg1.tip(), tag::may_not_exist ) .exists() )   ) )
+			{	seg1.remove_from_mesh ( interf );
+				square.boundary().cell_in_front_of ( seg1.tip() ) .reverse()
+					.add_to_mesh ( interf );
+				return true;                                                  }                 }  }
+
+
+
+
+opposite :
+
+	if ( not ambient.cell_in_front_of ( seg1, tag::may_not_exist ). exists() )
+	// 'seg1' is on the boundary of 'ambient' - we may want to eliminate it
+	{	if ( not interf.cell_in_front_of ( seg2.tip(), tag::may_not_exist) .exists() )
+		{	if ( std::abs ( psi ( seg1.base().reverse() ) ) >
+			     std::abs ( psi ( seg2.tip() ) )              )
+			{	seg1.remove_from_mesh ( interf );
+				square.boundary().cell_in_front_of(seg1.tip()).reverse().add_to_mesh ( interf );
+				return true;                                                      } 
+			// else  -- abs(psi) the other way around
+			if ( interf.cell_behind ( seg2.base().reverse(), tag::may_not_exist ) .exists() )
+			{	seg2.remove_from_mesh ( interf );
+				square.boundary().cell_in_front_of ( seg2.base().reverse() )
+					.add_to_mesh ( interf );
+				return true;                                              }                 }
+		if ( not interf.cell_behind ( seg2.base().reverse(), tag::may_not_exist) .exists() )
+		{	if ( std::abs ( psi ( seg2.base().reverse() ) ) <
+			     std::abs ( psi ( seg1.tip() ) )              )
+			{	seg1.remove_from_mesh ( interf );
+				square.boundary().cell_in_front_of(seg2.base().reverse()).reverse()
+					.add_to_mesh ( interf );
+				return true;                                                   }
+			// else  -- abs(psi) the other way around
+			if ( interf.cell_in_front_of ( seg2.tip(), tag::may_not_exist ) .exists() )
+			{	seg2.remove_from_mesh ( interf );
+				square.boundary().cell_in_front_of(seg1.tip()).add_to_mesh ( interf );
+				return true;                                                  }                  }
+		return false;                                                                          }
+	
+	if ( not ambient.cell_behind ( seg2, tag::may_not_exist ) .exists() )
+	// 'seg2' is on the boundary of 'ambient' - we may want to eliminate it
+	{	if ( not interf.cell_in_front_of ( seg1.tip(), tag::may_not_exist) .exists() )
+		{	if ( std::abs ( psi ( seg2.base().reverse() ) ) >
+			     std::abs ( psi ( seg1.tip() ) )              )
+			{	seg2.remove_from_mesh ( interf );
+				square.boundary().cell_behind(seg2.tip()).add_to_mesh ( interf );
+				return true;                                                      } 
+			// else  -- abs(psi) the other way around
+			if ( interf.cell_behind ( seg1.base().reverse(), tag::may_not_exist ) .exists() )
+			{	seg1.remove_from_mesh ( interf );
+				square.boundary().cell_behind ( seg1.base().reverse() ) .reverse()
+					.add_to_mesh ( interf );
+				return true;                                              }                 }
+		if ( not interf.cell_behind ( seg1.base().reverse(), tag::may_not_exist) .exists() )
+		{	if ( std::abs ( psi ( seg1.base().reverse() ) ) <
+			     std::abs ( psi ( seg2.tip() ) )              )
+			{	seg2.remove_from_mesh ( interf );
+				square.boundary().cell_in_front_of(seg2.base().reverse())
+					.add_to_mesh ( interf );
+				return true;                                                   }
+			// else  -- abs(psi) the other way around
+			if ( interf.cell_in_front_of ( seg1.tip(), tag::may_not_exist ) .exists() )
+			{	seg1.remove_from_mesh ( interf );
+				square.boundary().cell_in_front_of ( seg1.tip() ) .reverse()
+					.add_to_mesh ( interf );
+				return true;                                                  }                 }
+		return false;                                                                          }
+
+
+
+
+
+
 void CellIterator::AroundCell::OfCodimTwo::OverSegments::NormalOrder::reset ( )
 
 // virtual from CellIterator::Core
