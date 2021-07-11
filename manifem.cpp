@@ -1,4 +1,24 @@
 
+
+	{	Cell P = *it_ver;
+		Cell sq1 ( tag::non_existent ), sq2 ( tag::non_existent ),
+		     sq3 ( tag::non_existent ), sq4 ( tag::non_existent );
+		Cell prev_seg = interf.cell_behind ( P, tag::may_not_exist );
+		if ( prev_seg.exists() )
+		{	sq1 = ambient.cell_in_front_of ( prev_seg, tag::may_not_exist );
+			sq2 = ambient.cell_behind ( prev_seg, tag::may_not_exist );      }
+		Cell next_seg = interf.cell_in_front_of ( P, tag::may_not_exist );
+		if ( next_seg.exists() )
+		{	sq3 = ambient.cell_in_front_of ( next_seg, tag::may_not_exist );
+			sq4 = ambient.cell_behind ( next_seg, tag::may_not_exist );       }
+		assert ( sq1.exists() and sq2.exists() and sq3.exists() and sq4.exists() );
+		// squares on different sides may never be equal
+		assert ( ( sq1 != sq4 ) and ( sq2 != sq3 ) );
+		if ( ( ( sq1 == sq3 ) and sq1.exists() ) or
+				 ( ( sq1 == sq3 ) and sq1.exists() ) or
+
+
+
 parallel :
 
 	if ( not interf.cell_in_front_of ( seg1.tip(), tag::may_not_exist) .exists() )
