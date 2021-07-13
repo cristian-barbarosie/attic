@@ -234,7 +234,5 @@ talvez acrescentar um quadrado negativo `a malha
 depois segments
 introduzir o tag::inner
 
-em main-cut, a iterface e' apanhada bem com zig-zag de angulos rectos
-temos que analisar cada canto e elimiar valores grandes de abs(psi)
-depois cortar diagonais usando o mesmo criterio sobre abs(psi)
-
+no manual, explicar que os iteradores a volta duma celula podem produzir novas
+celulas negativas
