@@ -216,8 +216,6 @@ em progressive.cpp, agora podemos usar, para interface, uma malha Fuzzy
 em vez duma lista de malhas conexas
 mais ainda : no futuro, usaremos uma malha STSI e o self-touch ficara' mais simples
 
-juncao : abandonamos o ramo fuzzy-STSI, passamos tudo para master
-
 nos exemplos abaixo,  o contador de celulas nao chega a zero
 3.3 : 8   3.15 : 4  3.17 : 4  3.18 : 4  3.19 : 4  3.22 : 4  3.24 : 8  6.2 : 4  6.3 : 7
 nalguns casos, tem a ver com os elementos finitos que nao ficam destruidos
@@ -228,11 +226,8 @@ escolher, no construtor, entre closed loop e open chain
 
 introduzir metodos CellIterator::is_closed_loop e CellIterator::is_open_chain
 
-vertices normal order parece bom, testei
-a seguir : vertices reverse order, testei
-talvez acrescentar um quadrado negativo `a malha
-depois segments
-introduzir o tag::inner
+permitir alguns iteradores ordenados sobre malhas Fuzzy de dimensao 1
 
-no manual, explicar que os iteradores a volta duma celula podem produzir novas
-celulas negativas
+redefinir add_to_mesh e remove_from_mesh para Mesh::Connected::OneDim
+o exemplo 10.2 depende disto
+
