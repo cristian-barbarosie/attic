@@ -231,4 +231,4 @@ o exemplo 10.2 depende disto
 
 temos um erro em error-cutty.cpp, com release 21.07 e com garbage collector on
 provavelmente um segmento e' destruido mas por que raio o ponto ainda se lembra dele ?
-
+estamos a tentar criar um segmento do tipo AA ? sera' ?
