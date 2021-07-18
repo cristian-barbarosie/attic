@@ -206,8 +206,6 @@ verificar com calma quantos objectos temporarios sao criados e tentar reduzir
 talvez criar iteradores que devolvam Cell::Core
 Core iterators should return Core cells ?
 
-verificar o garbage collector de celulas e malhas
-
 definir um construtor Mesh::Connected::OneDim com argumentos first_ver, last_ver
 em add_to_my_cells, incrementar nb_of_segs
 eliminar update_info_connected_one_dim de progressive.cpp
@@ -230,4 +228,7 @@ permitir alguns iteradores ordenados sobre malhas Fuzzy de dimensao 1
 
 redefinir add_to_mesh e remove_from_mesh para Mesh::Connected::OneDim
 o exemplo 10.2 depende disto
+
+temos um erro em error-cutty.cpp, com release 21.07 e com garbage collector on
+provavelmente um segmento e' destruido mas por que raio o ponto ainda se lembra dele ?
 
