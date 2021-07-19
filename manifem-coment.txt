@@ -233,3 +233,25 @@ temos um erro em error-cutty.cpp, com release 21.07 e com garbage collector on
 provavelmente um segmento e' destruido mas por que raio o ponto ainda se lembra dele ?
 estamos a tentar criar um segmento do tipo AA ? sera' ?
 nao, nao deve ser isso, ate' porque sem garbage collector funciona
+
+void verify_tri ( Cell tri )
+
+{	assert ( tri.dim() == 2 );
+	assert ( tri.boundary().number_of ( tag::vertices ) == 3 );
+
+	CellIterator it = tri.boundary().iterator ( tag::over_vertices );
+	for ( it.reset(); it.in_range(); it++ )
+	{	Cell V = *it;
+		Cell::Positive * cll = tag::Util::assert_cast
+			< Cell::Core*, Cell::Positive* > ( V.core );
+		typedef std::map < Mesh::Core*, Cell::field_to_meshes > maptype;
+		typedef std::map < Mesh::Core*, Cell::field_to_meshes_same_dim > maptype_sd;
+		maptype & cm2 = cll->meshes[1];
+		typename maptype::iterator itt = cm2.find ( tri.boundary().core );
+		assert ( itt != cm2.end() );
+		Cell::field_to_meshes f = itt->second;
+		std::cout << V.core->get_name() << " : neg " << f.counter_neg << ", pos " << f.counter_pos << std::endl;
+	}		
+}		
+
+a funcao acima deveria devolver sempre 11 11 11 ? ou aceitamos 02 11 20 ?
