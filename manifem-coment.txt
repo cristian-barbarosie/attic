@@ -255,3 +255,4 @@ void verify_tri ( Cell tri )
 }		
 
 a funcao acima deveria devolver sempre 11 11 11 ? ou aceitamos 02 11 20 ?
+talvez desistir destes contadores ?
