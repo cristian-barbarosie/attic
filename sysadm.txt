@@ -102,6 +102,7 @@ Para o AsusDocking, tenho que fazer o connect de cada vez :
 #!/bin/sh
 echo "connect 1C:B7:2C:1E:FD:FA" | bluetoothctl
 O teclado flexível vermelho Dali conecta-se sozinho.
+Para activar a deteccao bluetooth, 'e preciso carregar Q + quadradinho
 
 rede wireless :
 --------------------------------------------------------------
