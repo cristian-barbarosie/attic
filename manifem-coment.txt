@@ -257,8 +257,6 @@ void verify_tri ( Cell tri )
 a funcao acima deveria devolver sempre 11 11 11 ? ou aceitamos 02 11 20 ?
 talvez desistir destes contadores ?
 
-alterei baricenter, ficou mal em progressive.cpp, corrigir !
-
 alterar os iteradores around one cell, permitir uma celula negativa como centro
 
-inserir comentarios sobre tag::do_not_bother em progressive.cpp e talvez noutros ficheiros
+permitir iterator ( tag::over, tag::vertices )
