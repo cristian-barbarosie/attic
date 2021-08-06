@@ -1,6 +1,20 @@
 
 
 
+	Cell::Numbering::Map numbering;
+	{ // just a block of code for hiding 'it' and 'counter'
+	CellIterator it = ABCD.iterator ( tag::over_vertices );
+	size_t counter = 0;
+	for ( it.reset() ; it.in_range(); it++ )
+	{	Cell V = *it;  numbering ( V ) = counter;  ++counter;  }
+	} // just a block of code
+
+
+
+//-------------------------------------------------------------------------------------------------
+
+	Cell::Numbering & numbering = * ( fe.numbers[0] );
+
 
 	// unfortunately, the numbering provided by fe.numbers[0] is not contiguous
 	// so we fill the main diagonal with ones
