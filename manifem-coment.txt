@@ -259,4 +259,4 @@ talvez desistir destes contadores ?
 
 alterar os iteradores around one cell, permitir uma celula negativa como centro
 
-permitir iterator ( tag::over, tag::vertices )
+talvez nao haja necessidade de polymorphic Field
