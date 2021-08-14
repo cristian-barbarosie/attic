@@ -226,9 +226,6 @@ introduzir metodos CellIterator::is_closed_loop e CellIterator::is_open_chain
 
 permitir alguns iteradores ordenados sobre malhas Fuzzy de dimensao 1
 
-redefinir add_to_mesh e remove_from_mesh para Mesh::Connected::OneDim
-o exemplo 10.2 depende disto
-
 temos um erro em error-cutty.cpp, com release 21.07 e com garbage collector on
 provavelmente um segmento e' destruido mas por que raio o ponto ainda se lembra dele ?
 estamos a tentar criar um segmento do tipo AA ? sera' ?
@@ -250,7 +247,8 @@ void verify_tri ( Cell tri )
 		typename maptype::iterator itt = cm2.find ( tri.boundary().core );
 		assert ( itt != cm2.end() );
 		Cell::field_to_meshes f = itt->second;
-		std::cout << V.core->get_name() << " : neg " << f.counter_neg << ", pos " << f.counter_pos << std::endl;
+		std::cout << V.core->get_name() << " : neg " << f.counter_neg
+		          << ", pos " << f.counter_pos << std::endl;
 	}		
 }		
 
@@ -260,3 +258,10 @@ talvez desistir destes contadores ?
 alterar os iteradores around one cell, permitir uma celula negativa como centro
 
 talvez nao haja necessidade de polymorphic Field
+
+ha' alguns sitios no codigo onde podemos dispensar o uso dum vertice temporario
+definindo um  Function::operator()  sem argumentos que devolva TakenOnNoCell
+a ideia seria substituir, por exemplo, x e y por x_const e y_const numa expressao
+talvez manter ambas as versoes o tempo todo
+
+
