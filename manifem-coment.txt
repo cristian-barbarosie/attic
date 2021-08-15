@@ -265,6 +265,7 @@ a ideia seria substituir, por exemplo, x e y por x_const e y_const numa expressa
 talvez manter ambas as versoes o tempo todo
 ou talvez deixar como esta' ...
 
-
+eliminar as duas classes Manifold::Implicit::OneEquation and ::TwoEquations
+redefinir o conceito de "equation", permitir equacoes vectoriais (sistemas)
 
 
