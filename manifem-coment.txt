@@ -268,4 +268,5 @@ ou talvez deixar como esta' ...
 eliminar as duas classes Manifold::Implicit::OneEquation and ::TwoEquations
 redefinir o conceito de "equation", permitir equacoes vectoriais (sistemas)
 
+talvez desistir de Function::vertex_for_multivalued
 
