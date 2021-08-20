@@ -1,5 +1,38 @@
 
+inline Function Function::multivalued
+( const tag::Through &, const Function::Action & g,
+  const tag::Becomes &, const Function & f         )
 
+{	return Function ( tag::whose_core_is,
+		new Function::Scalar::MultiValued ( *this, tag::through, g, tag::becomes, f ) );  }
+
+
+inline Function Function::multivalued
+( const tag::Through &, const Function::Action & g1,
+  const tag::Becomes &, const Function & f1,
+  const tag::Through &, const Function::Action & g2,
+  const tag::Becomes &, const Function & f2         )
+
+{	return Function ( tag::whose_core_is,
+		new Function::Scalar::MultiValued ( *this, tag::through, g1, tag::becomes, f1,
+		                                           tag::through, g2, tag::becomes, f2 ) );  }
+
+
+inline Function Function::multivalued
+( const tag::Through &, const Function::Action & g1,
+  const tag::Becomes &, const Function & f1,
+  const tag::Through &, const Function::Action & g2,
+  const tag::Becomes &, const Function & f2,
+  const tag::Through &, const Function::Action & g3,
+  const tag::Becomes &, const Function & f3         )
+
+{	return Function ( tag::whose_core_is,
+		new Function::Scalar::MultiValued ( *this, tag::through, g1, tag::becomes, f1,
+		                                           tag::through, g2, tag::becomes, f2,
+		                                           tag::through, g3, tag::becomes, f3 ) );  }
+
+
+//-------------------------------------------------------------------------------------------------
 
 	Cell::Numbering::Map numbering;
 	{ // just a block of code for hiding 'it' and 'counter'
