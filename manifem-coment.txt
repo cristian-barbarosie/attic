@@ -272,3 +272,7 @@ tambem  short_int_heap_size, size_t_heap_size
 
 talvez mover atributos double_heap, size_t_heap, short_int_heap
 de Cell::Core para Cell::Positive e Cell::Negative
+
+neste momento Function::CompositionOfActions contem um map
+talvez mudar para dois vectores um de Function::Action outro de short int
+nas operacoes aritmeticas, afirmar que os dois vectores de Function::Action sao iguais
