@@ -1,67 +1,10 @@
 
-inline Function Function::multivalued
-( const tag::Through &, const Function::Action & g,
-  const tag::Becomes &, const Function & f         )
-
-{	return Function ( tag::whose_core_is,
-		new Function::Scalar::MultiValued ( *this, tag::through, g, tag::becomes, f ) );  }
-
-
-inline Function Function::multivalued
-( const tag::Through &, const Function::Action & g1,
-  const tag::Becomes &, const Function & f1,
-  const tag::Through &, const Function::Action & g2,
-  const tag::Becomes &, const Function & f2         )
-
-{	return Function ( tag::whose_core_is,
-		new Function::Scalar::MultiValued ( *this, tag::through, g1, tag::becomes, f1,
-		                                           tag::through, g2, tag::becomes, f2 ) );  }
-
-
-inline Function Function::multivalued
-( const tag::Through &, const Function::Action & g1,
-  const tag::Becomes &, const Function & f1,
-  const tag::Through &, const Function::Action & g2,
-  const tag::Becomes &, const Function & f2,
-  const tag::Through &, const Function::Action & g3,
-  const tag::Becomes &, const Function & f3         )
-
-{	return Function ( tag::whose_core_is,
-		new Function::Scalar::MultiValued ( *this, tag::through, g1, tag::becomes, f1,
-		                                           tag::through, g2, tag::becomes, f2,
-		                                           tag::through, g3, tag::becomes, f3 ) );  }
-
-
-//-------------------------------------------------------------------------------------------------
-
-	Cell::Numbering::Map numbering;
-	{ // just a block of code for hiding 'it' and 'counter'
-	CellIterator it = ABCD.iterator ( tag::over_vertices );
-	size_t counter = 0;
-	for ( it.reset() ; it.in_range(); it++ )
-	{	Cell V = *it;  numbering ( V ) = counter;  ++counter;  }
-	} // just a block of code
-
-
-
-//-------------------------------------------------------------------------------------------------
-
-	Cell::Numbering & numbering = * ( fe.numbers[0] );
-
-
-	// unfortunately, the numbering provided by fe.numbers[0] is not contiguous
-	// so we fill the main diagonal with ones
-	// then we put zero for vertices belonging to ABCD
-	for ( size_t i = 0; i < size_matrix; i++ )
-		matrix_A.insert ( i, i ) = 1.;
-	{ // just a block of code for hiding 'it'
-	CellIterator it = ABCD.iterator ( tag::over_vertices );
-	for ( it.reset(); it.in_range(); it++ )
-	{	Cell P = *it;
-		size_t i = numbering ( P );
-		matrix_A.coeffRef ( i, i ) = 0.;  }
-	} // just a block of code 
-
+inline void print_spin ( Function::CompositionOfActions a )
+{	std::cout << "{";
+	auto it = a.index_map.begin();
+	for ( ; it != a.index_map.end(); it++ )
+		std::cout << it->first.id << ":" << it->second << ",";
+	std::cout << "}" << std::endl;                           }
 
 
 
