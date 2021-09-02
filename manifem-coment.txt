@@ -276,3 +276,16 @@ de Cell::Core para Cell::Positive e Cell::Negative
 neste momento Function::CompositionOfActions contem um map
 talvez mudar para dois vectores um de Function::Action outro de short int
 nas operacoes aritmeticas, afirmar que os dois vectores de Function::Action sao iguais
+
+assunto para testar candidatos : optimizar Function::Inequality::Set operator&&
+( const Function::Inequality::Set & f, const Function::Inequality::Set & g )
+em function.h
+
+celuas internas, invisiveis para o utilizador :
+- em global.cpp, build, shadow vertices, faceis de eliminar se definirmos
+  novas operacoes de interpolacao
+- nos elementos finitos
+- em progressive.cpp
+
+
+
