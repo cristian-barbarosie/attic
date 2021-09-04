@@ -1,4 +1,32 @@
 
+
+void print_segment ( Cell seg )
+
+{	Manifold::Quotient * manif_q = dynamic_cast
+		< Manifold::Quotient* > ( Manifold::working.core );
+	assert ( manif_q );
+	Function xy = manif_q->base_space.coordinates();
+	Function x = xy[0], y = xy[1];
+	size_t n = manif_q->actions.size();
+	assert ( n == manif_q->spins.size() );
+	Cell V = seg.base().reverse();
+	Cell W = seg.tip();
+	std::cout << "[(" << x(V) << "," << y(V) << "),(" << x(W) << "," <<y(W) << ")] ";
+	Function::CompositionOfActions a = seg.spin();
+	std::cout << "(";
+	for ( size_t i = 0; i < n; i++ )
+	{	Function::Action & g = manif_q->actions[i];
+		std::map<Function::Action,short int>::const_iterator itt = a.index_map.find ( g );
+		if ( itt == a.index_map.end() )
+		{	std::cout << "0,"; continue;  }
+		short int exp = itt->second;
+		assert ( exp != 0 );
+		std::cout << exp << ",";                                                            }
+	std::cout << ")" << std::endl;                                                           }
+	
+
+//-------------------------------------------------------------------------------------------------
+
 inline void print_spin ( Function::CompositionOfActions a )
 {	std::cout << "{";
 	auto it = a.index_map.begin();

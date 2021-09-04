@@ -287,5 +287,6 @@ celuas internas, invisiveis para o utilizador :
 - nos elementos finitos
 - em progressive.cpp
 
-
+melhorar enum.py : incluir um aviso para usar python2
+se houver um erro, manter todos os ficheiros como estao
 
