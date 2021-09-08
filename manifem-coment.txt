@@ -230,6 +230,7 @@ temos um erro em error-cutty.cpp, com release 21.07 e com garbage collector on
 provavelmente um segmento e' destruido mas por que raio o ponto ainda se lembra dele ?
 estamos a tentar criar um segmento do tipo AA ? sera' ?
 nao, nao deve ser isso, ate' porque sem garbage collector funciona
+a mesma coisa (ou parecida) em parag-10.2.cpp
 
 void verify_tri ( Cell tri )
 
@@ -290,3 +291,5 @@ celuas internas, invisiveis para o utilizador :
 melhorar enum.py : incluir um aviso para usar python2
 se houver um erro, manter todos os ficheiros como estao
 
+rever Mesh::Connected::OneDim::remove_from_my_cells
+prever o caso de a malha ficar vazia ou desconexa
