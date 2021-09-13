@@ -1,5 +1,62 @@
 
 
+flow of 'set_of_nearby_ver'in global.cpp:
+
+void progress_relocate
+// we compute here 'set_of_ver'
+// (which is the set of all vertices in the cloud close enough to 'ver')
+// and keep it for future use in 'check_touching'
+
+inline bool check_touching
+// we take advantage of 'set_of_ver' which is the set of all vertices in the cloud
+// close enough to 'ver', previously computed in 'progress_relocate'
+// we can destroy it here, it won't be used anymore
+	if ( not ver.exists() )  return false;  // no touch
+
+void progressive_construct ( args )
+
+	Cell vertex_recently_built ( tag::non_existent );
+
+restart:
+angles_60 :
+
+		// triangle waiting to be filled; see paragraph 12.7 in the manual
+			if ( ver_next_to_B == A )  // this is the last triangle in this piece of progress_interface
+			{	... goto search_for_start;    }
+			... goto angles_60;               }
+
+	bool touch = check_touching < manif_type >
+		( vertex_recently_built, set_of_nearby_vertices,
+      point_120, stop_point_120, cloud              );
+	vertex_recently_built = Cell ( tag::non_existent );
+	if ( touch )
+	{	... goto angles_60;   }
+  ...
+// look for angles around 120 deg :
+  ...
+		if ( progress_cos_sq_120 ( A, point_120, B, prev_seg, next_seg) < 0.55 )  // 0.67
+		// angle around 120 deg, we want to form two triangles; see paragraph 12.7 in the manual
+		{	if ( ver_prev_to_A == ver_next_to_B )  // quadrangle
+			{ ...		goto search_for_start;  }
+			Cell P ( tag::vertex );  vertex_recently_built = P;
+      ...
+			progress_relocate < manif_type > ( P, 2, sum_of_nor, set_of_nearby_vertices, cloud );
+      ...
+			goto angles_60;                                                        }
+  ...
+// build a brand new triangle :
+  ...
+	Cell P ( tag::vertex );  vertex_recently_built = P;
+  ....
+	progress_relocate < manif_type > ( P, 1, f, set_of_nearby_vertices, cloud );
+  ...
+	goto angles_60;
+...
+search_for_start :  // execution only reaches this point through 'goto'
+
+//-------------------------------------------------------------------------------------------------
+
+
 void print_segment ( Cell seg )
 
 {	Manifold::Quotient * manif_q = dynamic_cast
@@ -24,8 +81,8 @@ void print_segment ( Cell seg )
 		std::cout << exp << ",";                                                            }
 	std::cout << ")" << std::endl;                                                           }
 	
-
 //-------------------------------------------------------------------------------------------------
+
 
 inline void print_spin ( Function::CompositionOfActions a )
 {	std::cout << "{";
