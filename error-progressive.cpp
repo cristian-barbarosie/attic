@@ -15,10 +15,10 @@ int main ( )
 	size_t n = 30;
 	double d = 2. / double(n);
 
-	Cell A ( tag::vertex );  x(A) = -1.2;  y(A) = -1.3;
-	Cell B ( tag::vertex );  x(B) =  1.2;  y(B) = -1.3;
-	Cell C ( tag::vertex );  x(C) =  1.2;  y(C) =  1.3;
-	Cell D ( tag::vertex );  x(D) = -1.2;  y(D) =  1.3;
+	Cell A ( tag::vertex );  x(A) = -1.3;  y(A) = -1.3;
+	Cell B ( tag::vertex );  x(B) =  1.3;  y(B) = -1.3;
+	Cell C ( tag::vertex );  x(C) =  1.3;  y(C) =  1.3;
+	Cell D ( tag::vertex );  x(D) = -1.3;  y(D) =  1.3;
 
 	Mesh AB ( tag::segment, A.reverse(), B, tag::divided_in, n );
 	Mesh BC ( tag::segment, B.reverse(), C, tag::divided_in, n );
