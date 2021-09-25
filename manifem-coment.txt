@@ -307,3 +307,9 @@ e principalmente : o que fazer na interface entre as duas malhas ?
 os contextos tambem poderiam tratar da numeracao automatica dos vertices
 
 temos um erro em error-progressive.cpp
+
+para a geracao progressiva de malha, podemos definir um campo de grupos de periodicidade
+uma estrutura cristalina localmente periodica
+pode ser com quadrados ou com losangulos com 60 graus
+definimos uma taxa de variacao maxima admissivel para esse grupo de periodicidade
+quando dois pedacos de interface se avizinham, interpolamos os respectivos grupos de per
