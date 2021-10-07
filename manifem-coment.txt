@@ -314,3 +314,5 @@ pode ser com quadrados ou com losangulos com 60 graus
 definimos uma taxa de variacao maxima admissivel para esse grupo de periodicidade
 quando dois pedacos de interface se avizinham, interpolamos os respectivos grupos de per
 
+introduzir um Action como argumento de interpolate
+e prescindir do vertice usado internamente
