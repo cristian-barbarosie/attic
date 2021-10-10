@@ -294,7 +294,7 @@ se houver um erro, manter todos os ficheiros como estao
 rever Mesh::Connected::OneDim::remove_from_my_cells
 prever o caso de a malha ficar vazia ou desconexa
 
-nao vou continuar a adaptar progressive.cppp para malhas no toro
+nao vou continuar a adaptar progressive.cpp para malhas no toro
 vou apostar em malhas STSI e contextos
 os contextos seriam uteis para dizer que os vertices dum pedaco de fronteira
 podem ser deslocados ao longo duma variedade
@@ -313,6 +313,15 @@ uma estrutura cristalina localmente periodica
 pode ser com quadrados ou com losangulos com 60 graus
 definimos uma taxa de variacao maxima admissivel para esse grupo de periodicidade
 quando dois pedacos de interface se avizinham, interpolamos os respectivos grupos de per
+(nao sei se da')
 
 introduzir um Action como argumento de interpolate
-e prescindir do vertice usado internamente
+e prescindir do vertice usado internamente (nao da')
+
+chateiam-me as celulas temporarias
+por exemplo, as usadas em interpolate com spin, ou nos elementos finitos master
+talvez criar umas proto-celulas (prokaryote) que usem o mesmo wrapper Cell mas que sejam
+meros contentores para valores de Fields
+as outras celulas seriam eukaryote (nao da')
+melhor criar celulas reservadas para interpolacao e para elementos finitos master
+mas evitar, por exemplo, a numeracao automatica
