@@ -1,5 +1,21 @@
 
 
+void copyStringNewFile(ifstream& inData, ofstream& outData)
+{
+    outData << inData.rdbuf();
+}
+
+
+//-------------------------------------------------------------------------------------------------
+
+
+#include <cstdio>
+ std::string name1 = std::tmpnam(nullptr);
+ std::FILE* tmpf = std::tmpfile();
+
+//-------------------------------------------------------------------------------------------------
+
+
 // global.cpp  Mesh::fold
 
 		Cell::Positive::HighDim * new_cll_ptr = new Cell::Positive::HighDim

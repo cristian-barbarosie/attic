@@ -317,11 +317,17 @@ quando dois pedacos de interface se avizinham, interpolamos os respectivos grupo
 
 introduzir um Action como argumento de interpolate
 e prescindir do vertice usado internamente (nao da')
+eliminar interpolate com tag::spin
 
 chateiam-me as celulas temporarias
 por exemplo, as usadas em interpolate com spin, ou nos elementos finitos master
 talvez criar umas proto-celulas (prokaryote) que usem o mesmo wrapper Cell mas que sejam
 meros contentores para valores de Fields
 as outras celulas seriam eukaryote (nao da')
-melhor criar celulas reservadas para interpolacao e para elementos finitos master
+
+criar celulas reservadas para interpolacao e para elementos finitos master
 mas evitar, por exemplo, a numeracao automatica
+introduzir construtores de celulas com tag::raw que nao chamem init_cell e
+nao dimensionem as heaps; temos que dimensionar a mao
+as coordenadas nos elementos finitos master tambem terao que ser declaradas
+como raw Fields cujos indices sejam definidos manualmente
