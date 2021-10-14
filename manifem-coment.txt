@@ -331,3 +331,9 @@ introduzir construtores de celulas com tag::raw que nao chamem init_cell e
 nao dimensionem as heaps; temos que dimensionar a mao
 as coordenadas nos elementos finitos master tambem terao que ser declaradas
 como raw Fields cujos indices sejam definidos manualmente
+
+em mesh.cpp, tiro a troca (ja' nao troco) os contadores
+nas chamadas para   link_face_to_msh  unlink_face_from_msh
+mas troco sim nas chamadas para  link_face_to_higher  unlink_face_from_higher
+compute_sign  e' a mesma coisa com  compute_cp_cn  ?
+versao de trabalho, com muito output, em  tmp/mesh.3.cpp
