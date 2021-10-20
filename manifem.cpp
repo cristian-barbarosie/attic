@@ -1,10 +1,11 @@
 
 
+
+
 void copyStringNewFile(ifstream& inData, ofstream& outData)
 {
     outData << inData.rdbuf();
 }
-
 
 //-------------------------------------------------------------------------------------------------
 
