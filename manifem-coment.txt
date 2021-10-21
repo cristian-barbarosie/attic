@@ -340,3 +340,8 @@ mas troco sim nas chamadas para  link_face_to_higher  unlink_face_from_higher
 compute_sign  e' a mesma coisa com  compute_cp_cn  ?
 versao de trabalho, com muito output, em  tmp/mesh.3.cpp
 
+tirar as actions de Cell::Spin e de Function::Jump
+usar sempre as actions da variedade (quociente) corrente
+e mesmo em Function::Action
+
+vou ter que criar wrappers mesmo para jumps ...
