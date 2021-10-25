@@ -200,14 +200,12 @@ mas P nao vai ter wrapper, apesar de ter contador == 1
 pois P tera' sido criado com
 Cell::Positive::Vertex * P = new Cell::Positive::Vertex ( tag::one_dummy_wrapper )
 
-temos destrutores de celulas e malhas ?  yes, default
-
 verificar com calma quantos objectos temporarios sao criados e tentar reduzir
 talvez criar iteradores que devolvam Cell::Core
 Core iterators should return Core cells ?
 
 definir um construtor Mesh::Connected::OneDim com argumentos first_ver, last_ver
-em add_to_my_cells, incrementar nb_of_segs
+em add_to_my_cells, incrementar nb_of_segs (ja' esta')
 eliminar update_info_connected_one_dim de progressive.cpp
 
 em progressive.cpp, agora podemos usar, para interface, uma malha Fuzzy
@@ -263,16 +261,11 @@ talvez nao haja necessidade de polymorphic Field
 eliminar as duas classes Manifold::Implicit::OneEquation and ::TwoEquations
 redefinir o conceito de "equation", permitir equacoes vectoriais (sistemas)
 
-substituir Cell::Core::init_pos_cell      por  Cell::Positive::init_cell,
-           Cell::Core::data_for_init_pos  por  Cell::Positive::data_for_init,
-           Cell::Core::init_neg_cell      por  Cell::Negative::init_cell,
-           Cell::Core::data_for_init_neg  por  Cell::Negative::data_for_init
-           Cell::double_heap_size_pos     por  Cell::Positive::double_heap_size
-           Cell::double_heap_size_neg     por  Cell::Negative::double_heap_size
-tambem  short_int_heap_size, size_t_heap_size
-
-talvez mover atributos double_heap, size_t_heap, short_int_heap
-de Cell::Core para Cell::Positive e Cell::Negative
+em function.h
+inline std::vector < double >  // static
+Function::Scalar::MultiValued::JumpIsSum::analyse_linear_expression
+( Function expression, Function base )
+devolvemos numeros que depois serao transformaos em vectores, corrigir
 
 neste momento Function::CompositionOfActions contem um map
 talvez mudar para dois vectores um de Function::Action outro de short int
