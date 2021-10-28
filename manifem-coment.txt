@@ -338,3 +338,23 @@ usar sempre as actions da variedade (quociente) corrente
 e mesmo em Function::Action
 
 vou ter que criar wrappers mesmo para jumps ...
+
+add_link_
+link_
+make_deep_connections
+ver->add_to_seg     eliminar override, usar NotVertex
+add_to_mesh  add_pos_seg et al
+face->add_to_bdry  add_pos_seg et al
+this->glue_common
+glue_on_my_bdry
+
+x cut_from_my_bdry
+x this->cut_common  
+x face->remove_from_bdry  remove_pos_seg et al
+x remove_from_mesh  remove_pos_seg et al
+x ver->remove_from_seg   eliminar override, usar NotVertex
+break_deep_connections
+unlink_   parece independente da ordem - sera' ? - por isso nao troco
+x remove_link_
+
+add_to_seg, remove_from_seg   eliminar override, usar NotVertex
