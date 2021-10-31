@@ -358,3 +358,5 @@ unlink_   parece independente da ordem - sera' ? - por isso nao troco
 x remove_link_
 
 add_to_seg, remove_from_seg   eliminar override, usar NotVertex
+talvez mudar o nome de  not_zero_dim_add_***_***  glue_common  cut_common
+mexem em cell_behind_within
