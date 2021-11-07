@@ -230,30 +230,6 @@ estamos a tentar criar um segmento do tipo AA ? sera' ?
 nao, nao deve ser isso, ate' porque sem garbage collector funciona
 a mesma coisa (ou parecida) em parag-10.2.cpp
 
-void verify_tri ( Cell tri )
-
-{	assert ( tri.dim() == 2 );
-	assert ( tri.boundary().number_of ( tag::vertices ) == 3 );
-
-	CellIterator it = tri.boundary().iterator ( tag::over_vertices );
-	for ( it.reset(); it.in_range(); it++ )
-	{	Cell V = *it;
-		Cell::Positive * cll = tag::Util::assert_cast
-			< Cell::Core*, Cell::Positive* > ( V.core );
-		typedef std::map < Mesh::Core*, Cell::field_to_meshes > maptype;
-		typedef std::map < Mesh::Core*, Cell::field_to_meshes_same_dim > maptype_sd;
-		maptype & cm2 = cll->meshes[1];
-		typename maptype::iterator itt = cm2.find ( tri.boundary().core );
-		assert ( itt != cm2.end() );
-		Cell::field_to_meshes f = itt->second;
-		std::cout << V.core->get_name() << " : neg " << f.counter_neg
-		          << ", pos " << f.counter_pos << std::endl;
-	}		
-}		
-
-a funcao acima deveria devolver sempre 11 11 11 ? ou aceitamos 02 11 20 ?
-talvez desistir destes contadores ?
-
 alterar os iteradores around one cell, permitir uma celula negativa como centro
 
 talvez nao haja necessidade de polymorphic Field
@@ -312,12 +288,6 @@ introduzir um Action como argumento de interpolate
 e prescindir do vertice usado internamente (nao da')
 eliminar interpolate com tag::spin
 
-chateiam-me as celulas temporarias
-por exemplo, as usadas em interpolate com spin, ou nos elementos finitos master
-talvez criar umas proto-celulas (prokaryote) que usem o mesmo wrapper Cell mas que sejam
-meros contentores para valores de Fields
-as outras celulas seriam eukaryote (nao da')
-
 criar celulas reservadas para interpolacao e para elementos finitos master
 mas evitar, por exemplo, a numeracao automatica
 introduzir construtores de celulas com tag::raw que nao chamem init_cell e
@@ -327,11 +297,7 @@ como raw Fields cujos indices sejam definidos manualmente
 
 unificar as classes Function::Action e Function::CompositionOfActions
 
-em mesh.cpp, tiro a troca (ja' nao troco) os contadores
-nas chamadas para   link_face_to_msh  unlink_face_from_msh
-mas troco sim nas chamadas para  link_face_to_higher  unlink_face_from_higher
-compute_sign  e' a mesma coisa com  compute_cp_cn  ?
-versao de trabalho, com muito output, em  tmp/mesh.3.cpp
+em mesh.cpp, compute_sign  e' a mesma coisa com  compute_cp_cn  ?
 
 tirar as actions de Cell::Spin e de Function::Jump
 usar sempre as actions da variedade (quociente) corrente
@@ -339,24 +305,6 @@ e mesmo em Function::Action
 
 vou ter que criar wrappers mesmo para jumps ...
 
-add_link_
-link_
-make_deep_connections
-ver->add_to_seg     eliminar override, usar NotVertex
-add_to_mesh  add_pos_seg et al
-face->add_to_bdry  add_pos_seg et al
-this->glue_common
-glue_on_my_bdry
-
-x cut_from_my_bdry
-x this->cut_common  
-x face->remove_from_bdry  remove_pos_seg et al
-x remove_from_mesh  remove_pos_seg et al
-x ver->remove_from_seg   eliminar override, usar NotVertex
-break_deep_connections
-unlink_   parece independente da ordem - sera' ? - por isso nao troco
-x remove_link_
-
-add_to_seg, remove_from_seg   eliminar override, usar NotVertex
-talvez mudar o nome de  not_zero_dim_add_***_***  glue_common  cut_common
-mexem em cell_behind_within
+uma instruccao do tipo
+	Mesh ellipse ( tag::progressive, tag::boundary, ellipse, tag::desired_length, 0.33 );
+da' segmentation fault !
