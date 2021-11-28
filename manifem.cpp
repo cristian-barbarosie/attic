@@ -17,53 +17,6 @@ void copyStringNewFile(ifstream& inData, ofstream& outData)
 //-------------------------------------------------------------------------------------------------
 
 
-// global.cpp  Mesh::fold
-
-		Cell::Positive::HighDim * new_cll_ptr = new Cell::Positive::HighDim
-			( tag::whose_boundary_is,
-				Mesh ( tag::whose_core_is,
-			         new Mesh::Connected::OneDim ( tag::with,
-			           cll.boundary().number_of ( tag::segments ),
-	               tag::segments, tag::one_dummy_wrapper       ),
-	         tag::freshly_created                                 ),
-				tag::one_dummy_wrapper                                     );
-		Cell new_cll ( tag::whose_core_is, new_cll_ptr, tag::freshly_created );
-		std::list < Cell > faces;
-		CellIterator it_bdry = cll.boundary() .iterator ( tag::over_segments );
-		for ( it_bdry.reset(); it_bdry.in_range(); it_bdry++ )
-		{	Cell seg = *it_bdry;
-			// no need for glue_on_bdry_of :
-			// new_cll has just been created, it has no meshes above
-			// we call add_to_mesh instead (as if the mesh were not a boundary)
-			std::cout << "Mesh::fold 931" << std::endl;
-			if ( seg.is_positive() )
-			{	std::cout << "Mesh::fold 933" << std::endl;
-				corresp_seg [ seg ] .core ->add_to_mesh
-					( new_cll.boundary().core, tag::do_not_bother );  }
-			else
-			{	std::cout << "Mesh::fold 937" << std::endl;
-				corresp_seg [ seg.reverse() ] .reverse() .core ->add_to_mesh
-					( new_cll.boundary().core, tag::do_not_bother );            }
-			std::cout << "Mesh::fold 940" << std::endl;
-		}
-		std::cout << "Mesh::fold 942" << std::endl;
-		assert ( not it_bdry.in_range() );
-		it_bdry.reset();  assert ( it_bdry.in_range() );
-		Cell seg = *it_bdry;
-		Cell V = seg.tip();
-		std::cout << "Mesh::fold 947" << std::endl;
-		Mesh::Connected::OneDim * bdry = tag::Util::assert_cast
-			< Mesh::Core*, Mesh::Connected::OneDim* > ( new_cll.boundary().core );
-		std::cout << "Mesh::fold 950" << std::endl;
-		bdry->first_ver = V.reverse();  // negative
-		bdry->last_ver = V;
-		std::cout << "Mesh::fold 954" << std::endl;
-		new_cll.add_to_mesh ( result );
-		std::cout << "Mesh::fold 956" << std::endl;
-
-//-------------------------------------------------------------------------------------------------
-
-
 // flow of 'set_of_nearby_ver'in global.cpp :
 
 void progress_relocate
