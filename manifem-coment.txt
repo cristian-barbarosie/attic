@@ -310,3 +310,7 @@ uma instruccao do tipo
 da' segmentation fault !
 
 eliminar a classe Integrator::Result, substituir por std::vector < double >
+
+
+for next release :
+list of strong and weak points
