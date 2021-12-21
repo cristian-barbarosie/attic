@@ -309,7 +309,9 @@ uma instruccao do tipo
 	Mesh ellipse ( tag::progressive, tag::boundary, ellipse, tag::desired_length, 0.33 );
 da' segmentation fault !
 
-eliminar a classe Integrator::Result, substituir por std::vector < double >
+melhorar a apresentacao em dock_on_hand_***
+em vez de [0] por coisas do tipo [ ind_psi1 ] ou [ int_psi1_x_psi2_y ]
+
 
 
 for next release :
