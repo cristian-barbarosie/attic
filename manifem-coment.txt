@@ -7,7 +7,7 @@ Convem desactivar as coordenadas xi eta quando remalhamos.
 No produto cartesiano de malhas, usar um iterador "coerente" e
 eliminar celulas que sabemos que ja nao serao usadas.
 
-Chamo "iterador coerente" a um iterador que usa uma interface (um corte) que "baleia"
+Chamo "iterador coerente" a um iterador que usa uma interface (um corte) que varre
 a malha toda. Usa apenas relacoes de vizinhanca (nao usa listas de celulas) mas precisa
 duma celula para iniciar o processo. Tem a vantagem que pode fornecer informacao suplementar.
 Para alem da celula corrente, pode indicar uma zona de celulas que ja' foram fornecidas
@@ -309,9 +309,8 @@ uma instruccao do tipo
 	Mesh ellipse ( tag::progressive, tag::boundary, ellipse, tag::desired_length, 0.33 );
 da' segmentation fault !
 
-melhorar a apresentacao em dock_on_hand_***
-em vez de [0] por coisas do tipo [ ind_psi1 ] ou [ int_psi1_x_psi2_y ]
-
+as funcoes de base dum elemento finito nao devolvem o valor  psi_A (A) == ?
+tenho que analisar get_value
 
 
 for next release :
