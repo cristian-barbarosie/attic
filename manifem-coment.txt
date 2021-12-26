@@ -312,6 +312,9 @@ da' segmentation fault !
 as funcoes de base dum elemento finito nao devolvem o valor  psi_A (A) == ?
 tenho que analisar get_value
 
+testar incrementar iteradores already out of range
+acrescentar asserts para evitar segmentation faults
+
 
 for next release :
 list of strong and weak points
