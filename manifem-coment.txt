@@ -315,6 +315,10 @@ tenho que analisar get_value
 testar incrementar iteradores already out of range
 acrescentar asserts para evitar segmentation faults
 
+codigo fortran que resolve problema celular e tambem faz optimizacao
+guardado em webpages.fc.ul.pt, cellular-pb-fortran.tgz
 
-for next release :
-list of strong and weak points
+mudar tag::random_orientation    para tag::orientation, tag::random
+      tag::inherent_orientation       tag::orientation, tag::inherent
+			tag::intrinsic_orientation para tag::orientation, tag::intrinsic
+
