@@ -321,5 +321,16 @@ guardado em webpages.fc.ul.pt, cellular-pb-fortran.tgz
 os iteradores tag::around a cell nao lidam bem com celulas negativas,
 ver parag-test-neg-cells.cpp
 
+seria giro poder usar gmsh so' para gerar os tetraedros
+por exemplo, criar a malha para uma casca em maniFEM e depois
+pedir a gmsh que encha o interior
+mensagem para o grupo de apoio do gmsh :
+
+Hello, any help is greatly appreciated.
+I have a 2D mesh like the one in the attached file. Is it possible to instruct gmsh to fill the interior with tetrahedra ? Note that I do not want to re-parametrize the surface, I want the triangles on the surface to remain unchanged.
+The attached mesh was built using maniFEM  http://manifem.rd.ciencias.ulisboa.pt/
+Thank you
+
+
 
 for the next release : in README : at the end of section 1, three lists
