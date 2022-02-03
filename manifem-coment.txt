@@ -247,13 +247,14 @@ neste momento Function::CompositionOfActions contem um map
 talvez mudar para dois vectores um de Function::Action outro de short int
 nas operacoes aritmeticas, afirmar que os dois vectores de Function::Action sao iguais
 
-assunto para testar candidatos : optimizar Function::Inequality::Set operator&&
+assuntos para testar candidatos :
+em function.h, optimizar Function::Inequality::Set operator&&
 ( const Function::Inequality::Set & f, const Function::Inequality::Set & g )
-em function.h
+em global.cpp, encurtar Mesh::build com tag::hexahedron
 
 celuas internas, invisiveis para o utilizador :
 - em global.cpp, build, shadow vertices, faceis de eliminar se definirmos
-  novas operacoes de interpolacao
+  novas operacoes de interpolacao [?]
 - nos elementos finitos
 - em progressive.cpp
 
@@ -327,10 +328,10 @@ pedir a gmsh que encha o interior
 mensagem para o grupo de apoio do gmsh :
 
 Hello, any help is greatly appreciated.
-I have a 2D mesh like the one in the attached file. Is it possible to instruct gmsh to fill the interior with tetrahedra ? Note that I do not want to re-parametrize the surface, I want the triangles on the surface to remain unchanged.
+I have a mesh like the one in the attached file, topological dimension 2, geometric dimension 3. Is it possible to instruct gmsh to fill the interior with tetrahedra ? Note that I do not want to re-parametrize the surface, I want the triangles on the surface to remain unchanged.
 The attached mesh was built using maniFEM  http://manifem.rd.ciencias.ulisboa.pt/
 Thank you
 
+fazer two-tori com sharp edges
 
 
-for the next release : in README : at the end of section 1, three lists
