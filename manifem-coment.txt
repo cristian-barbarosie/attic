@@ -111,18 +111,10 @@ fornecemos uma distancia calculada com a margem acima referida
 Cloud devolve uma lista possivelmente demasiado larga,
 depois nos filtramos com a distancia de curto alcance
 
-Mesh::Mesh ( const tag::Progressive &, const tag::StartAt &, const Cell & start,
-             const tag::DesiredLength &, double desired_length                   )
-deveria ter tag::random_orientation ?  uniformizar
-
 em manifold.h, ficou steps_for_Newton = 10
 testar com os dois toros se faz diferenca diminuir este valor
 
 disponibilizar separadamente 'simplif' assim como fizemos com 'metric tree' ?
-
-em progressive_construct, poderiamos fornecer (sub)variedades como fronteiras
-(em vez de malhas)
-especificar uma direccao (com tag::towards) atraves duma desigualdade entre duas funcoes
 
 o copy-constructor de Manifold nao deveria setar Manifold::working
 ou talvez o move operator e move constructor ?
@@ -241,7 +233,7 @@ em function.h
 inline std::vector < double >  // static
 Function::Scalar::MultiValued::JumpIsSum::analyse_linear_expression
 ( Function expression, Function base )
-devolvemos numeros que depois serao transformaos em vectores, corrigir
+devolvemos numeros que depois serao transformados em vectores, corrigir
 
 neste momento Function::CompositionOfActions contem um map
 talvez mudar para dois vectores um de Function::Action outro de short int
@@ -259,7 +251,6 @@ celuas internas, invisiveis para o utilizador :
 - em progressive.cpp
 
 melhorar enum.py : incluir um aviso para usar python2
-se houver um erro, manter todos os ficheiros como estao
 
 rever Mesh::Connected::OneDim::remove_from_my_cells
 prever o caso de a malha ficar vazia ou desconexa
@@ -276,25 +267,9 @@ de outro grau noutra parte da malha, numeracao das entradas nos fields
 e principalmente : o que fazer na interface entre as duas malhas ?
 os contextos tambem poderiam tratar da numeracao automatica dos vertices
 
-temos um erro em error-progressive.cpp
-
-para a geracao progressiva de malha, podemos definir um campo de grupos de periodicidade
-uma estrutura cristalina localmente periodica
-pode ser com quadrados ou com losangulos com 60 graus
-definimos uma taxa de variacao maxima admissivel para esse grupo de periodicidade
-quando dois pedacos de interface se avizinham, interpolamos os respectivos grupos de per
-(nao sei se da')
-
 introduzir um Action como argumento de interpolate
 e prescindir do vertice usado internamente (nao da')
 eliminar interpolate com tag::spin
-
-criar celulas reservadas para interpolacao e para elementos finitos master
-mas evitar, por exemplo, a numeracao automatica
-introduzir construtores de celulas com tag::raw que nao chamem init_cell e
-nao dimensionem as heaps; temos que dimensionar a mao
-as coordenadas nos elementos finitos master tambem terao que ser declaradas
-como raw Fields cujos indices sejam definidos manualmente
 
 unificar as classes Function::Action e Function::CompositionOfActions
 
@@ -332,6 +307,7 @@ I have a mesh like the one in the attached file, topological dimension 2, geomet
 The attached mesh was built using maniFEM  http://manifem.rd.ciencias.ulisboa.pt/
 Thank you
 
-fazer two-tori com sharp edges
+
+for next release :  insert example 3.20
 
 
