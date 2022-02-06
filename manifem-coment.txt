@@ -307,7 +307,31 @@ I have a mesh like the one in the attached file, topological dimension 2, geomet
 The attached mesh was built using maniFEM  http://manifem.rd.ciencias.ulisboa.pt/
 Thank you
 
+sugestao da Anabela para produto cartesiano, ou extrude
+depende se pomos w na cauda de v ou na ponta, a orientacao do produto muda
+tem a ver com  v x w = -w x v
+
+malhas STSI for progressive mesh generation
+imaginamos a interface em baixo, outra ainda nao tocada pairando em cima
+2D
+quando ha' um touch com dois pontos acima, construimos um triangulo
+  ficam dois triangulos a tocar-se num so' ponto
+ou, se houver um touch com um so' ponto, construimos um segmento bi-direcional
+  como se fosse uma membrana
+3D
+quando ha' um touch com tres pontos de cima, construimos um tetraedro
+  ficam dois tetraedros a tocarem-se num so' ponto, nem seria precisa uma interface STSI
+quando ha' um touch com dois pontos de cima, podemos construir um triangulo bi-direcional
+  como se fosse uma membrana
+quando ha' um touch com um ponto de cima, nao podemos construir um segmento ... ou podemos ?
+ao longo do programa todo, temos que ter em conta que podera' haver triangulos membrana
+  na nossa interface (e tambem segmentos fio)
+
+ainda em progressive mesh generation, guardar a fronteira inicialmente fornecida pelo utilizador
+sabemos que, para outros no's (nao perntencentes a essa fronteira fornecida)
+podemos alterar as coordenadas, fazer baricentros etc
+
+
 
 for next release :  insert example 3.20
-
 
