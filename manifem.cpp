@@ -1,10 +1,10 @@
 
 
-//-------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------
 
 	// cout << setprecision(10);
 
-//-------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------
 
 
 void copyStringNewFile(ifstream& inData, ofstream& outData)
@@ -12,14 +12,57 @@ void copyStringNewFile(ifstream& inData, ofstream& outData)
     outData << inData.rdbuf();
 }
 
-//-------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------
 
 
 #include <cstdio>
  std::string name1 = std::tmpnam(nullptr);
  std::FILE* tmpf = std::tmpfile();
 
-//-------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------
+
+
+inline void redistribute_vertices ( const Mesh & msh,    // line 710
+  const Cell & start, const Cell & stop, double last_length, size_t n )
+// hidden in anonymous namespace    // called only once
+
+// perhaps just make some baricenters ?
+
+// chain of n segments, desired length d, last length d'
+// move p1 with   (d'-d) / n
+//    alpha x0 + beta x2 == x1 + (d'-d) / n   alpha+beta == 1
+//    x2 == x0 + 2d   x1 == x0 + d
+//    2 d beta == d + (d'-d)/ n 
+// move p2 with 2*(d'-d) / n
+//    alpha x1 + beta x3 == x2 + 2(d'-d)/n   alpha+beta == 1
+//    x1 == x0 + d + (d'-d)/n
+//    x3 == x0 + 3d
+//    alpha (d'-d)/n + 2 d beta == d + 2(d'-d)/n
+//    ( 2d - (d'-d)/n ) beta == d + (d'-d)/n
+// move p2 with 3*(d'-d) / n
+//    ( 2d - 2(d'-d)/n ) beta == d + (d'-d)/n
+
+// how to do this if the metric is not uniform ?
+// use sums of lengths os segments, mimiking geodesics
+	
+{	Cell A = msh .cell_behind (stop) .base() .reverse();
+	for ( size_t i = 1; i < n; i++ )
+	{	if ( A == start )  {  n = i;  break;  }
+		A = msh .cell_behind (A) .base() .reverse();  }
+	assert ( n > 1 );
+	Cell B = msh .cell_in_front_of (A) .tip();
+	Cell C = msh .cell_in_front_of (B) .tip();
+	double epsilon = ( last_length - desired_len_at_point ) / n;
+	double v1 = desired_len_at_point + epsilon,  v2 = 2*desired_len_at_point;
+	while ( C != stop )
+	{	double beta = v1/v2;
+		Manifold::working .interpolate ( B, 1.-beta, A, beta, C );
+		v2 -= epsilon;  assert ( v2 > 0. );
+		A = B;  B = C;
+		C = msh .cell_in_front_of (B) .tip();                          }
+	Manifold::working.interpolate ( B, 0.5, A, 0.5, C );                         }
+
+//-----------------------------------------------------------------------------------------------
 
 
 // flow of 'set_of_nearby_ver'in global.cpp :
@@ -76,7 +119,7 @@ angles_60 :
 ...
 search_for_start :  // execution only reaches this point through 'goto'
 
-//-------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------
 
 
 void print_segment ( Cell seg )
@@ -103,7 +146,7 @@ void print_segment ( Cell seg )
 		std::cout << exp << ",";                                                            }
 	std::cout << ")" << std::endl;                                                           }
 	
-//-------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------
 
 
 inline void print_spin ( Function::CompositionOfActions a )
@@ -115,7 +158,7 @@ inline void print_spin ( Function::CompositionOfActions a )
 
 
 
-//-------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------
 
 bool correctly_oriented_complicated ( const Mesh msh )
 
@@ -125,7 +168,8 @@ bool correctly_oriented_complicated ( const Mesh msh )
 {	Manifold::Implicit::OneEquation * m_impl =
 		dynamic_cast<Manifold::Implicit::OneEquation*> ( Manifold::working.core );
 	assert ( m_impl );
-	Manifold::Euclid * m_euclid = dynamic_cast<Manifold::Euclid*> ( m_impl->surrounding_space.core );
+	Manifold::Euclid * m_euclid =
+		dynamic_cast<Manifold::Euclid*> ( m_impl->surrounding_space.core );
 	assert ( m_euclid );
 
 	if ( progress_nb_of_coords != 2 )
@@ -158,5 +202,5 @@ bool correctly_oriented_complicated ( const Mesh msh )
 	assert ( ( counter == 2 ) or ( counter == -2 ) );
 	return counter == 2;                                                         }
 
-//-------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------
 
