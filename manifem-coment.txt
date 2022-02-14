@@ -334,4 +334,4 @@ podemos alterar as coordenadas, fazer baricentros etc
 
 
 for next release :  insert example 3.20
-
+                    upload gallery
