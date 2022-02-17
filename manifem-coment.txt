@@ -6,6 +6,7 @@ Convem desactivar as coordenadas xi eta quando remalhamos.
 
 No produto cartesiano de malhas, usar um iterador "coerente" e
 eliminar celulas que sabemos que ja nao serao usadas.
+A mesma técnica pode ser aplicada a 'unfold'.
 
 Chamo "iterador coerente" a um iterador que usa uma interface (um corte) que varre
 a malha toda. Usa apenas relacoes de vizinhanca (nao usa listas de celulas) mas precisa
@@ -296,6 +297,8 @@ guardado em webpages.fc.ul.pt, cellular-pb-fortran.tgz
 
 os iteradores tag::around a cell nao lidam bem com celulas negativas,
 ver parag-test-neg-cells.cpp
+
+paragrafo 3.20 menciona exportar uma malha composta, acrescentar texto
 
 seria giro poder usar gmsh so' para gerar os tetraedros
 por exemplo, criar a malha para uma casca em maniFEM e depois
