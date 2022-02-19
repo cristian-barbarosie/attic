@@ -336,5 +336,5 @@ podemos alterar as coordenadas, fazer baricentros etc
 
 
 
-for next release :  insert example 3.20
+for next release :  insert examples 3.20, 2.12
                     upload gallery
