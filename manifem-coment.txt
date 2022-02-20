@@ -334,7 +334,11 @@ ainda em progressive mesh generation, guardar a fronteira inicialmente fornecida
 sabemos que, para outros no's (nao perntencentes a essa fronteira fornecida)
 podemos alterar as coordenadas, fazer baricentros etc
 
+nao gosto de gradientes conjugados porque dividimos por numeros pequenos
+(por quantidades que vao para zero)
+para resolver um sistema de equacoes lineares, substituir por eliminacao de Gauss
+para encontrar um ponto a distancia 1 de outros pontos, ...
 
 
 for next release :  insert examples 3.20, 2.12
-                    upload gallery
+                    upload gallery, add submarine
