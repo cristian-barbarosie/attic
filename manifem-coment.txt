@@ -339,6 +339,10 @@ nao gosto de gradientes conjugados porque dividimos por numeros pequenos
 para resolver um sistema de equacoes lineares, substituir por eliminacao de Gauss
 para encontrar um ponto a distancia 1 de outros pontos, ...
 
+implementar algoritmos de frontal meshing diferenciados para o caso  double seg_len  ou  Function seg_len
+no segundo caso, para cada segmento fazemos a media entre seg_len calculado nas duas extremidades
 
-for next release :  insert examples 3.20, 2.12
+for next release :  insert example 2.12
                     upload gallery, add submarine
+
+mais tarde : exemplo 3.23
