@@ -337,12 +337,21 @@ podemos alterar as coordenadas, fazer baricentros etc
 nao gosto de gradientes conjugados porque dividimos por numeros pequenos
 (por quantidades que vao para zero)
 para resolver um sistema de equacoes lineares, substituir por eliminacao de Gauss
-para encontrar um ponto a distancia 1 de outros pontos, ...
+para encontrar um ponto a distancia 1 de outros pontos, usar baricentros com pesos
+ver parag-test-alg-lin.cpp
 
 implementar algoritmos de frontal meshing diferenciados para o caso  double seg_len  ou  Function seg_len
 no segundo caso, para cada segmento fazemos a media entre seg_len calculado nas duas extremidades
 
-for next release :  insert example 2.12
-                    upload gallery, add submarine
+implementar umas unbreakable cells cuja fronteira possa ser percorrida com iteradores "coerentes"
+mas rapidamente
 
-mais tarde : exemplo 3.23
+
+
+for next release :  insert example 6.2
+       adaptar as duas versoes do cap 6, sem esquecer o final do 6.2
+			 numeracao 6.* -> 6.2
+
+
+mais tarde, depois de refazer o algoritmo de geracao frontal de malha,
+introduzir o exemplo 3.23
