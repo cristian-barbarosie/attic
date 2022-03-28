@@ -346,6 +346,8 @@ no segundo caso, para cada segmento fazemos a media entre seg_len calculado nas 
 implementar umas unbreakable cells cuja fronteira possa ser percorrida com iteradores "coerentes"
 mas rapidamente
 
+alterar o algoritmo de unfolding, fazer por pedaços maiores de malha, semelhante com o MetricTree
+ou parecido com os iteradores coerentes ?
 
 
 for next release :  insert example 6.2
