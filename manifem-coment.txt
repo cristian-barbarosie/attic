@@ -348,6 +348,8 @@ mas rapidamente
 
 alterar o algoritmo de unfolding, fazer por pedaços maiores de malha, semelhante com o MetricTree
 ou parecido com os iteradores coerentes ?
+ha casos em que isso nao funciona, por exemplo quando a malha desembrulhada for desconexa
+pena
 
 
 for next release :  insert example 6.2
