@@ -351,11 +351,4 @@ ou parecido com os iteradores coerentes ?
 ha casos em que isso nao funciona, por exemplo quando a malha desembrulhada for desconexa
 pena
 
-
-for next release :  insert example 6.2
-       adaptar as duas versoes do cap 6, sem esquecer o final do 6.2
-			 numeracao 6.* -> 6.2
-       verificacao do link contrib.md
-
-mais tarde, depois de refazer o algoritmo de geracao frontal de malha,
-introduzir o exemplo 3.23
+depois de refazer o algoritmo de geracao frontal de malha, introduzir o exemplo 3.23
