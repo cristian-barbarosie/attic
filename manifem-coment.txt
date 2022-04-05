@@ -349,10 +349,14 @@ mas rapidamente
 alterar o algoritmo de unfolding, fazer por pedaços maiores de malha, semelhante com o MetricTree
 ou parecido com os iteradores coerentes ?
 ha casos em que isso nao funciona, por exemplo quando a malha desembrulhada for desconexa
-pena
+mesmo assim podemos implementar, acrescentamos tag::frontal
+o utilizador availa se e' apropriado ou nao usar tag::frontal
 
 depois de refazer o algoritmo de geracao frontal de malha, introduzir o exemplo 3.23
 
 
 em cada release :
 editar  index.html  readme.md  maniFEM.h
+
+
+quando fizer mais alteracoes : editar maniFEM.h
