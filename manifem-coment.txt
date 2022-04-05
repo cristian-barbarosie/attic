@@ -352,3 +352,7 @@ ha casos em que isso nao funciona, por exemplo quando a malha desembrulhada for 
 pena
 
 depois de refazer o algoritmo de geracao frontal de malha, introduzir o exemplo 3.23
+
+
+em cada release :
+editar  index.html  readme.md  maniFEM.h
