@@ -359,4 +359,4 @@ em cada release :
 editar  index.html  readme.md  maniFEM.h
 
 
-quando fizer mais alteracoes : editar maniFEM.h
+quando fizer mais alteracoes : editar README, maniFEM.h, gallery, index.html
