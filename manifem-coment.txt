@@ -356,7 +356,4 @@ depois de refazer o algoritmo de geracao frontal de malha, introduzir o exemplo 
 
 
 em cada release :
-editar  index.html  readme.md  maniFEM.h
-
-
-quando fizer mais alteracoes : editar README, maniFEM.h, gallery, index.html
+editar  index.html  README.md  maniFEM.h  index.html
