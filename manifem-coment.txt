@@ -354,6 +354,8 @@ o utilizador availa se e' apropriado ou nao usar tag::frontal
 
 depois de refazer o algoritmo de geracao frontal de malha, introduzir o exemplo 3.23
 
+para 22.05 : exemplo 3.18 da' erro com -DMANIFEM_COLLECT_CM
+
 
 em cada release :
-editar  index.html  README.md  maniFEM.h  index.html
+editar / verificar  index.html  README.md  maniFEM.h  index.html  Makefile
