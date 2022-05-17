@@ -65,7 +65,7 @@ eliminar o construtor Manifold circle_manif ( tag::parametric, tag::of_dim, 1 )
 
 em simplif, acrescentar construtores para Sum e Prod com tag::reserve_size
 
-em progressive, evitar o uso da raiz quadrada (testar para ver se melhora)
+em frontal.cpp, evitar o uso da raiz quadrada (testar para ver se melhora)
 por exemplo, para um certo vertice A, procuramos outros vertices a distancia menor que d de A
 procuramos um oficial O de rank r[k], calculamos o quadrado da distancia AO
 se AO for maior que r[k]+d, sabemos que nao vale a pena procurar entre os subalternos de O
@@ -82,7 +82,7 @@ x = (x^2+AO^2)/(2x)  a partir de  x = alpha d[k] + beta r[k+1]
 todos os valores deste algoritmo estao acima da raiz quadrada, portanto AO <= x
 a partir de  alpha d[k] + beta r[k+1] <= AO <= x  aplicamos novamente a combinacao convexa
 
-em progressive, quando construimos as normais, guardar tambem o vector segmento
+em frontal.cpp, quando construimos as normais, guardar tambem o vector segmento
 uniformizar o uso de positive_orientation, cos_sq_120 e cos_sq_60
 pensar bem os produtos internos, pois as normais sao ortogonais na metrica de Riemman
 em switch_orientation ( Mesh ), nao usar reverse, mas chamar switch_orientation ( Cell )
@@ -126,14 +126,14 @@ vou ter que usar dynamic_pointer_cast ou static_pointer_cast, ver simplif.cpp
 ou entao usar inheritance from tag::Util::Core e tag::Util::Wrapper
 em Cell nao vale a pena porque tenho a informacao por outras vias
 
-rever em pormenor progressive.cpp lines 1787-1834
+rever em pormenor frontal.cpp lines 1787-1834
 
 neste momento, instrucoes como
 Function xi_eta_phys ( xi_eta, tag::composed_with, transf )
 nao funcionam bem; xi_eta_phys fica a herdar de Function::Scalar
 
 refazer completamente as malhas
-malhas caoticas mante^em a lista de ce'lulas como ate' agora
+malhas fuzzy mante^em a lista de ce'lulas como ate' agora
 malhas ordenadas te^em iteradores diferentes, ordenados
 as operacoes de acrescentar ou retirar uma ce'lula serao diferenciados
 introduzir um tag::do_not_worry para acrescentar ou retirar uma ce'lula
@@ -199,9 +199,9 @@ Core iterators should return Core cells ?
 
 definir um construtor Mesh::Connected::OneDim com argumentos first_ver, last_ver
 em add_to_my_cells, incrementar nb_of_segs (ja' esta')
-eliminar update_info_connected_one_dim de progressive.cpp
+eliminar update_info_connected_one_dim de frontal.cpp
 
-em progressive.cpp, agora podemos usar, para interface, uma malha Fuzzy
+em frontal.cpp, agora podemos usar, para interface, uma malha Fuzzy
 em vez duma lista de malhas conexas
 mais ainda : no futuro, usaremos uma malha STSI e o self-touch ficara' mais simples
 
@@ -249,14 +249,14 @@ celuas internas, invisiveis para o utilizador :
 - em global.cpp, build, shadow vertices, faceis de eliminar se definirmos
   novas operacoes de interpolacao [?]
 - nos elementos finitos
-- em progressive.cpp
+- em frontal.cpp
 
 melhorar enum.py : incluir um aviso para usar python2
 
 rever Mesh::Connected::OneDim::remove_from_my_cells
 prever o caso de a malha ficar vazia ou desconexa
 
-nao vou continuar a adaptar progressive.cpp para malhas no toro
+nao vou continuar a adaptar frontal.cpp para malhas no toro
 vou apostar em malhas STSI e contextos
 os contextos seriam uteis para dizer que os vertices dum pedaco de fronteira
 podem ser deslocados ao longo duma variedade
@@ -283,7 +283,7 @@ e mesmo em Function::Action
 vou ter que criar wrappers mesmo para jumps ...
 
 uma instruccao do tipo
-	Mesh ellipse ( tag::progressive, tag::boundary, ellipse, tag::desired_length, 0.33 );
+	Mesh ellipse ( tag::frontal, tag::boundary, ellipse, tag::desired_length, 0.33 );
 da' segmentation fault !
 
 as funcoes de base dum elemento finito nao devolvem o valor  psi_A (A) == ?
@@ -314,7 +314,7 @@ sugestao da Anabela para produto cartesiano, ou extrude
 depende se pomos w na cauda de v ou na ponta, a orientacao do produto muda
 tem a ver com  v x w = -w x v
 
-malhas STSI for progressive mesh generation
+malhas STSI for frontal mesh generation
 imaginamos a interface em baixo, outra ainda nao tocada pairando em cima
 2D
 quando ha' um touch com dois pontos acima, construimos um triangulo
@@ -330,7 +330,7 @@ quando ha' um touch com um ponto de cima, nao podemos construir um segmento ... 
 ao longo do programa todo, temos que ter em conta que podera' haver triangulos membrana
   na nossa interface (e tambem segmentos fio)
 
-ainda em progressive mesh generation, guardar a fronteira inicialmente fornecida pelo utilizador
+ainda em frontal mesh generation, guardar a fronteira inicialmente fornecida pelo utilizador
 sabemos que, para outros no's (nao perntencentes a essa fronteira fornecida)
 podemos alterar as coordenadas, fazer baricentros etc
 
