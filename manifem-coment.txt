@@ -354,6 +354,21 @@ o utilizador availa se e' apropriado ou nao usar tag::frontal
 
 depois de refazer o algoritmo de geracao frontal de malha, introduzir o exemplo 3.23
 
+a projeccao do vector tagente / normal sobre uma variedade implicita
+poderia ser feita com derivacao simbolica
+
+acrescentar um elemento finito hand-coded 1d (segmento)
+acrescentar a integranda 1
+
+em parag-test-error-01.cpp, com garbage collector,
+da' erro ao acrescentar um segmento a uma malha
+
+numa malha negativa obtenho erro ao acrescentar um segmento, parag-test-error-02.cpp
+
 
 em cada release :
 editar / verificar  index.html  README.md  maniFEM.h  Makefile
+
+depois da release : alterar novamente maniFEM.h
+tirar C-x 5 b do colophon
+acrescentar anabela e armando em contributors (section aknowledgements)
