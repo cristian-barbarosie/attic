@@ -1,3 +1,8 @@
+# Give Up GitHub
+
+This project has given up GitHub.
+(See [Software Freedom Conservancy](https://sfconservancy.org/)'s [*Give Up  GitHub* site](https://GiveUpGitHub.org) for details.)
+
 # attic
 stuff not currently used, or just kept here for the future
 
